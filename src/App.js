@@ -7,14 +7,14 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			contacts: []
+			boards: [{ id: 123, name: "dupa" }]
 		};
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:8080/contacts')
+		axios.get('http://localhost:8080/boards')
 			.then(res => {
-				this.setState({ contacts: res.data });
+				this.setState({ boards: res.data });
 			});
 	}
 
@@ -24,30 +24,23 @@ class App extends Component {
 				<div className="panel panel-default">
 					<div className="panel-heading">
 						<h3 className="panel-title">
-							CONTACTS LIST
+							Boards
             			</h3>
 					</div>
 					<div className="panel-body">
-						<h4><Link to="/create"><span className="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Contact</Link></h4>
-						<table className="table table-stripe">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Address</th>
-								</tr>
-							</thead>
-							<tbody>
-								{this.state.contacts.map((c, index) =>
-									<tr key={index}>
-										<td><Link to={`/show/${c.id}`}>{c.name}</Link></td>
-										<td>{c.address}</td>
-									</tr>
-								)}
-							</tbody>
-						</table>
+						<ul className="list">
+							{this.state.boards.map((board, index) =>
+								<li key={index}>
+									<Link to={`/BoardView/${board.id}`}>{board.name}</Link>
+								</li>
+							)}
+							<li>
+								<Link to="/create">Create board</Link>
+							</li>
+						</ul>
 					</div>
 				</div>
-			</div>
+			</div >
 		);
 	}
 }

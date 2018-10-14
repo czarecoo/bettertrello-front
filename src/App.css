@@ -1,0 +1,16 @@
+ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li{
+	margin: 0 2% 8px 0;
+	list-style-position: inside;
+    border: 1px solid black;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+}

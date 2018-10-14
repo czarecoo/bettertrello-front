@@ -8,10 +8,6 @@ class Create extends Component {
 		super();
 		this.state = {
 			name: '',
-			address: '',
-			city: '',
-			phone: '',
-			email: ''
 		};
 	}
 	onChange = (e) => {
@@ -23,46 +19,30 @@ class Create extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		const { name, address, city, phone, email } = this.state;
+		const { name } = this.state;
 
-		axios.post('http://localhost:8080/contacts', { name, address, city, phone, email })
+		axios.post('http://localhost:8080/boards', { name })
 			.then((result) => {
 				this.props.history.push("/")
 			});
 	}
 
 	render() {
-		const { name, address, city, phone, email } = this.state;
+		const { name } = this.state;
 		return (
 			<div className="container">
 				<div className="panel panel-default">
 					<div className="panel-heading">
 						<h3 className="panel-title">
-							ADD CONTACT
+							Create board
             			</h3>
 					</div>
 					<div className="panel-body">
-						<h4><Link to="/"><span className="glyphicon glyphicon-th-list" aria-hidden="true"></span> Contacts List</Link></h4>
+						<h4><Link to="/">Cancel</Link></h4>
 						<form onSubmit={this.onSubmit}>
 							<div className="form-group">
-								<label htmlFor="isbn">Name:</label>
-								<input type="text" className="form-control" name="name" value={name} onChange={this.onChange} placeholder="Name" />
-							</div>
-							<div className="form-group">
-								<label htmlFor="title">Address:</label>
-								<input type="text" className="form-control" name="address" value={address} onChange={this.onChange} placeholder="Address" />
-							</div>
-							<div className="form-group">
-								<label htmlFor="author">City:</label>
-								<input type="text" className="form-control" name="city" value={city} onChange={this.onChange} placeholder="City" />
-							</div>
-							<div className="form-group">
-								<label htmlFor="published_date">Phone:</label>
-								<input type="text" className="form-control" name="phone" value={phone} onChange={this.onChange} placeholder="Phone Number" />
-							</div>
-							<div className="form-group">
-								<label htmlFor="publisher">Email:</label>
-								<input type="email" className="form-control" name="email" value={email} onChange={this.onChange} placeholder="Email Address" />
+								<label>Name:</label>
+								<input type="text" className="form-control" name="name" value={name} onChange={this.onChange} placeholder="Enter new board name" />
 							</div>
 							<button type="submit" className="btn btn-default">Submit</button>
 						</form>
