@@ -7,7 +7,7 @@ import App from './App';
 import './App.css';
 import Edit from './components/Edit';
 import Create from './components/Create';
-import BoardView from './components/BoardView';
+import Board from './components/Board';
 
 ReactDOM.render(
 	<Router>
@@ -15,7 +15,7 @@ ReactDOM.render(
 			<Route exact path='/' component={App} />
 			<Route path='/edit/:id' component={Edit} />
 			<Route path='/create' component={Create} />
-			<Route path='/BoardView/:id' component={BoardView} />
+			<Route path='/board/:id' component={Board} />
 		</div>
 	</Router>,
 	document.getElementById('root')

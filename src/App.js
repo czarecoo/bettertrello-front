@@ -31,7 +31,7 @@ class App extends Component {
 						<ul className="list">
 							{this.state.boards.map((board, index) =>
 								<li key={index}>
-									<Link to={`/BoardView/${board.id}`}>{board.name}</Link>
+									<Link to={`/board/${board.id}`}>{board.name}</Link>
 								</li>
 							)}
 							<li>
