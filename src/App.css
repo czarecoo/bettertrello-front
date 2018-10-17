@@ -2,31 +2,9 @@ ol, ul {
     list-style: none;
     margin: 0;
     padding: 0;
+	display: flex;
 }
 
 li{
-	margin: 0 2% 8px 0;
-	list-style-position: inside;
-    border: 1px solid black;
-}
-
-.list {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.header{
-	 display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top-left-radius: 8 px;
-  border-top-right-radius: 8 px;
-  background-color: blue;
-  transition: background-color 0.1s ease;
-}
-
-.card{
-	  margin: 8 px;
-  display: flex;
-  flex-direction: column;
+	padding: 0 8px;
 }

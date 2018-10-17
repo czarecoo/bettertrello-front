@@ -11,6 +11,9 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 class List extends Component {
 	render() {
+		if (this.props.cards === undefined) {
+			return null;
+		}
 		return (
 			this.props.cards.map((item, index) => (
 				<Draggable key={item.id} draggableId={item.id} index={index}>

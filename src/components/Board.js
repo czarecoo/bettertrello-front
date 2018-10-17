@@ -45,6 +45,23 @@ class Board extends Component {
 						id: "list-2",
 						cards: [
 							{
+								id: "card-1",
+								content: "card 1"
+							}
+						]
+					},
+					{
+						id: "list-3",
+						cards: [
+							{
+								id: "card-1",
+								content: "card 1"
+							},
+							{
+								id: "card-2",
+								content: "card 2"
+							},
+							{
 								id: "card-3",
 								content: "card 3"
 							},
@@ -53,6 +70,10 @@ class Board extends Component {
 								content: "card 4"
 							}
 						]
+					},
+					{
+						id: "list-4",
+						cards: []
 					}
 				]
 		};
@@ -82,23 +103,29 @@ class Board extends Component {
 	}
 
 	render() {
-		return (
+		var lists = (
 			this.state.lists.map((list, index) => (
-				< DragDropContext onDragEnd={this.onDragEnd.bind(this)} key={index} >
-					<Droppable droppableId={list.id}>
-						{(provided, snapshot) => (
-							<div
-								ref={provided.innerRef}
-								style={getListStyle(snapshot.isDraggingOver)}
-							>
-								<List cards={list.cards}></List>
-								{provided.placeholder}
-							</div>
-						)}
-					</Droppable>
-				</DragDropContext >
-			)
-			)
+				<li key={index}>
+					< DragDropContext onDragEnd={this.onDragEnd.bind(this)}  >
+						<Droppable droppableId={list.id}>
+							{(provided, snapshot) => (
+								<div
+									ref={provided.innerRef}
+									style={getListStyle(snapshot.isDraggingOver)}
+								>
+									<h3>{list.id}</h3>
+									<List cards={list.cards}></List>
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+					</DragDropContext >
+				</li>
+			)));
+		return (
+			<ul>
+				{lists}
+			</ul>
 		)
 	}
 }
