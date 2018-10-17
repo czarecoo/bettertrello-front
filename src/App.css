@@ -14,3 +14,19 @@ li{
     display: flex;
     flex-wrap: wrap;
 }
+
+.header{
+	 display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 8 px;
+  border-top-right-radius: 8 px;
+  background-color: blue;
+  transition: background-color 0.1s ease;
+}
+
+.card{
+	  margin: 8 px;
+  display: flex;
+  flex-direction: column;
+}
