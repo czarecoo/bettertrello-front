@@ -7,7 +7,7 @@ class Create extends Component {
 	constructor() {
 		super();
 		this.state = {
-			name: '',
+			name: '', cardLists: []
 		};
 	}
 	onChange = (e) => {
@@ -19,9 +19,9 @@ class Create extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		const { name } = this.state;
+		const { name, cardLists } = this.state;
 
-		axios.post('http://localhost:8080/boards', { name })
+		axios.post('http://localhost:8080/boards', { name, cardLists })
 			.then((result) => {
 				this.props.history.push("/")
 			});
