@@ -9,7 +9,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 	...draggableStyle,
 });
 
-class List extends Component {
+class ListContent extends Component {
 	render() {
 		if (this.props.cards === undefined) {
 			return null;
@@ -37,4 +37,4 @@ class List extends Component {
 }
 
 
-export default List;
+export default ListContent;
