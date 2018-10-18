@@ -12,7 +12,7 @@ class Board extends Component {
 	render() {
 		return (
 			<li>
-				<Droppable droppableId={this.props.list.id}>
+				<Droppable droppableId={this.props.list.id} type={"cards"}>
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}

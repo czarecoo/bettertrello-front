@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ListWrapper from './ListWrapper';
 import UtilityFunctions from './UtilityFunctions';
+
+const getListStyle = () => ({
+	display: 'flex',
+	overflow: 'auto',
+});
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+	userSelect: 'none',
+	...draggableStyle,
+});
 
 class Board extends Component {
 	constructor(props) {
@@ -10,6 +20,7 @@ class Board extends Component {
 			lists: UtilityFunctions.getTestData()
 		};
 		this.onCardDrop.bind(this);
+		this.onListDrop.bind(this);
 	}
 	onCardDrop(result) {
 		var listsCopy;
@@ -44,25 +55,66 @@ class Board extends Component {
 			});
 		}
 	}
+	onListDrop(result) {
+		const reorderedLists = UtilityFunctions.reorder(
+			this.state.lists,
+			result.source.index,
+			result.destination.index
+		);
+		this.setState({
+			lists: reorderedLists,
+		});
+	}
 
 	onDragEnd(result) {
 		if (!result.destination) {
 			return;
 		}
 		console.log(result)
-		this.onCardDrop(result);
+		if (result.type === "cards") {
+			this.onCardDrop(result);
+		}
+		if (result.type === "lists") {
+			this.onListDrop(result);
+		}
 	}
 
 	render() {
 		var lists = (
 			this.state.lists.map((list, index) => (
-				<ListWrapper list={list} key={index}></ListWrapper>
+				<Draggable key={list.id} draggableId={list.id} index={index}>
+					{(provided, snapshot) => (
+						<div
+							ref={provided.innerRef}
+							{...provided.draggableProps}
+							{...provided.dragHandleProps}
+							style={getItemStyle(
+								snapshot.isDragging,
+								provided.draggableProps.style
+							)}
+						>
+							<ListWrapper list={list} key={index}></ListWrapper>
+						</div>
+					)}
+				</Draggable>
 			)));
 		return (
 			<ul>
-				< DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
-					{lists}
-				</DragDropContext >
+				<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
+					<Droppable droppableId="droppable" direction="horizontal" type="lists">
+						{(provided, snapshot) => (
+							<div
+								ref={provided.innerRef}
+								{...provided.droppableProps}
+								style={getListStyle()}
+								{...provided.droppableProps}
+							>
+								{lists}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+				</DragDropContext>
 			</ul>
 		)
 	}
