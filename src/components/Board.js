@@ -22,6 +22,20 @@ const getIndex = (index, lists) => {
 		}
 	}
 }
+
+const move = (source, destination, droppableSource, droppableDestination) => {
+	const sourceClone = Array.from(source);
+	const destClone = Array.from(destination);
+	const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+	destClone.splice(droppableDestination.index, 0, removed);
+
+	const result = [];
+	result[0] = sourceClone;
+	result[1] = destClone;
+
+	return result;
+};
 class Board extends Component {
 	constructor(props) {
 		super(props);
@@ -83,11 +97,11 @@ class Board extends Component {
 		if (!result.destination) {
 			return;
 		}
-
+		var listsCopy;
 		if (result.destination.droppableId === result.source.droppableId) {
 
 			const i = getIndex(result.source.droppableId, this.state.lists);
-			var listsCopy = this.state.lists;
+			listsCopy = this.state.lists;
 			const reorderedCards = reorder(
 				listsCopy[i].cards,
 				result.source.index,
@@ -98,7 +112,21 @@ class Board extends Component {
 				lists: listsCopy,
 			});
 		} else {
-			console.log(result);
+			const i = getIndex(result.source.droppableId, this.state.lists);
+			const j = getIndex(result.destination.droppableId, this.state.lists);
+			listsCopy = this.state.lists;
+
+			const moveResult = move(
+				listsCopy[i].cards,
+				listsCopy[j].cards,
+				result.source,
+				result.destination
+			);
+			listsCopy[i].cards = moveResult[0];
+			listsCopy[j].cards = moveResult[1];
+			this.setState({
+				lists: listsCopy,
+			});
 		}
 	}
 
@@ -106,7 +134,6 @@ class Board extends Component {
 		var lists = (
 			this.state.lists.map((list, index) => (
 				<li key={index}>
-
 					<Droppable droppableId={list.id}>
 						{(provided, snapshot) => (
 							<div
@@ -119,7 +146,6 @@ class Board extends Component {
 							</div>
 						)}
 					</Droppable>
-
 				</li>
 			)));
 		return (
