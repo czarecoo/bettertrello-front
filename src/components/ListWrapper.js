@@ -18,7 +18,7 @@ class Board extends Component {
 							ref={provided.innerRef}
 							style={getListStyle(snapshot.isDraggingOver)}
 						>
-							<h3>{this.props.list.id}</h3>
+							<h3>{this.props.list.name}</h3>
 							<ListContent cards={this.props.list.cards}></ListContent>
 							{provided.placeholder}
 						</div>

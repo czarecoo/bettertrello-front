@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ListWrapper from './ListWrapper';
 import UtilityFunctions from './UtilityFunctions';
+import axios from 'axios';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -21,6 +22,13 @@ class Board extends Component {
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
+	}
+	componentDidMount() {
+		axios.get('http://localhost:8080/boards/' + this.props.match.params.id + '/lists')
+			.then(res => {
+				this.setState({ lists: res.data });
+				console.log(this.state.lists)
+			});
 	}
 	onCardDrop(result) {
 		var listsCopy;

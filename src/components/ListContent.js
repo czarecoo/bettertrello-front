@@ -11,7 +11,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 class ListContent extends Component {
 	render() {
-		if (this.props.cards === undefined) {
+		if (this.props.cards === undefined || this.props.cards === null) {
 			return null;
 		}
 		return (
@@ -27,7 +27,7 @@ class ListContent extends Component {
 								provided.draggableProps.style
 							)}
 						>
-							{item.content}
+							{item.name}
 						</div>
 					)}
 				</Draggable>
