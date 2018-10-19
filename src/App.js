@@ -30,8 +30,8 @@ class App extends Component {
 					<div className="panel-body">
 						<ul className="list">
 							{this.state.boards.map((board, index) =>
-								<Link to={`/board/${board.id}`}>
-									<li className="boardMin" key={index}>
+								<Link key={index} to={`/board/${board.id}`}>
+									<li className="boardMin">
 										{board.name}
 									</li>
 								</Link>
