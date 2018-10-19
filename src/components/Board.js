@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ListWrapper from './ListWrapper';
 import UtilityFunctions from './UtilityFunctions';
 import axios from 'axios';
+import Addlist from './Addlist';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -27,7 +28,6 @@ class Board extends Component {
 		axios.get('http://localhost:8080/boards/' + this.props.match.params.id + '/lists')
 			.then(res => {
 				this.setState({ lists: res.data });
-				console.log(this.state.lists)
 			});
 	}
 	onCardDrop(result) {
@@ -118,6 +118,7 @@ class Board extends Component {
 								{...provided.droppableProps}
 							>
 								{lists}
+								<Addlist listsSize={this.state.lists === null || this.state.lists === undefined ? 0 : this.state.lists.length}></Addlist>
 								{provided.placeholder}
 							</div>
 						)}

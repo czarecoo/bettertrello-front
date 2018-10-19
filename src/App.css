@@ -24,3 +24,27 @@ a:hover, a:visited, a:link, a:active {
     -webkit-box-shadow: none!important;
     box-shadow: none!important;
 }
+.card{
+	padding: 16px;
+	margin: 0 0 8px 0;
+	background: #a5a5a5;
+}
+.card:hover{
+	background: gray;
+}
+.addCard{
+	padding: 2px 16px;
+	margin: 0 0 8px 0;
+	background: lightgrey;
+	display: block;
+}
+.addList{
+	background: lightgrey;
+	padding: 2px;
+	width: 250px;
+	height: 27px;
+}
+.addCard:hover,.addList:hover{
+	text-decoration: underline;
+	background: darkgray;
+}

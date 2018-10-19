@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-	userSelect: 'none',
-	padding: 16,
-	margin: `0 0 8px 0`,
-	background: isDragging ? 'lightgreen' : 'grey',
-	...draggableStyle,
-});
-
 class ListContent extends Component {
 	render() {
 		if (this.props.cards === undefined || this.props.cards === null) {
@@ -22,10 +14,7 @@ class ListContent extends Component {
 							ref={provided.innerRef}
 							{...provided.draggableProps}
 							{...provided.dragHandleProps}
-							style={getItemStyle(
-								snapshot.isDragging,
-								provided.draggableProps.style
-							)}
+							className="card"
 						>
 							{item.name}
 						</div>

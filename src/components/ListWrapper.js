@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import ListContent from './ListContent';
-
+import Addcard from './Addcard';
 const getListStyle = isDraggingOver => ({
-	background: isDraggingOver ? 'lightblue' : 'lightgrey',
+	background: 'lightgrey',
 	padding: 8,
 	width: 250,
 });
@@ -24,6 +24,7 @@ class Board extends Component {
 						</div>
 					)}
 				</Droppable>
+				<Addcard listSize={this.props.list.cards === null || this.props.list.cards === undefined ? 0 : this.props.list.cards.length}></Addcard>
 			</li>
 		)
 	}
