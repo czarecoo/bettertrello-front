@@ -9,14 +9,16 @@ class Addcard extends Component {
 		};
 	}
 	addCard() {
-		axios.post('http://localhost:8080/cards', {
-			name: this.state.newCardName
-		})
-			.then(res => {
-				if (res.status === 200) {
-					this.props.getBoards();
-				}
-			});
+		if (this.state.newCardName !== "") {
+			axios.post('http://localhost:8080/cards', {
+				name: this.state.newCardName
+			})
+				.then(res => {
+					if (res.status === 200) {
+						this.props.getBoards();
+					}
+				});
+		}
 	}
 	toggleAddingCard() {
 		this.setState({ isAddingCard: !this.state.isAddingCard });
