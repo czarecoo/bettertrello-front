@@ -5,8 +5,7 @@ import Addcard from './Addcard';
 const getListStyle = isDraggingOver => ({
 	background: 'lightgrey',
 	padding: 8,
-	width: 250,
-	minHeight: 82,
+	minHeight: 32,
 });
 
 class Board extends Component {
@@ -26,7 +25,7 @@ class Board extends Component {
 						</div>
 					)}
 				</Droppable>
-				<Addcard listSize={this.props.list.cards === null || this.props.list.cards === undefined ? 0 : this.props.list.cards.length}></Addcard>
+				<Addcard getBoards={this.props.getBoards} listSize={this.props.list.cards === null || this.props.list.cards === undefined ? 0 : this.props.list.cards.length}></Addcard>
 			</li>
 		)
 	}

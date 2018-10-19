@@ -12,6 +12,7 @@ const getListStyle = () => ({
 
 const getItemStyle = (isDragging, draggableStyle) => ({
 	userSelect: 'none',
+	width: '250px',
 	...draggableStyle,
 });
 
@@ -24,11 +25,14 @@ class Board extends Component {
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
 	}
-	componentDidMount() {
+	getBoards() {
 		axios.get('http://localhost:8080/boards/' + this.props.match.params.id + '/lists')
 			.then(res => {
 				this.setState({ lists: res.data });
 			});
+	}
+	componentDidMount() {
+		this.getBoards();
 	}
 	onCardDrop(result) {
 		var listsCopy;
@@ -101,7 +105,7 @@ class Board extends Component {
 								provided.draggableProps.style
 							)}
 						>
-							<ListWrapper list={list} key={index}></ListWrapper>
+							<ListWrapper list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
 						</div>
 					)}
 				</Draggable>
