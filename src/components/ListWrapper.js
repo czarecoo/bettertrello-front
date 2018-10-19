@@ -6,19 +6,21 @@ const getListStyle = isDraggingOver => ({
 	background: 'lightgrey',
 	padding: 8,
 	width: 250,
+	minHeight: 82,
 });
 
 class Board extends Component {
 	render() {
 		return (
 			<li>
+				<h3 className="listTitle">{this.props.list.name}</h3>
 				<Droppable droppableId={this.props.list.id} type={"cards"}>
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}
 							style={getListStyle(snapshot.isDraggingOver)}
 						>
-							<h3>{this.props.list.name}</h3>
+
 							<ListContent cards={this.props.list.cards}></ListContent>
 							{provided.placeholder}
 						</div>
