@@ -8,6 +8,39 @@ ol, ul {
 li{
 	padding: 0 8px;
 }
+.header{
+	background: #026aa7;
+	text-align:center;
+	display: flex; 
+}
+.block {
+    text-align:left;
+}
+.center {
+    margin:auto;
+}
+.left {
+    margin:auto auto auto 0;
+}
+.right {
+    margin:auto 0 auto auto;
+}
+.homebtn{
+	background: #3e8bcf;
+	padding: 5px;
+	margin: 5px;
+}
+.homebtn:hover{
+	background: #2886d8;
+}
+.logo{
+	transition: all 0.1s linear;
+   -webkit-transition: all 0.1s linear;
+   -moz-transition: all 0.1s linear;
+}
+.logo:hover{
+	background: #2886d8;
+}
 
 .list{
 	width: 250,
