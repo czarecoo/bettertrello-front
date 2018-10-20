@@ -17,8 +17,8 @@ class Addlist extends Component {
 				.then(res => {
 					if (res.status === 200) {
 						this.props.getBoards();
-						this.toggleAddingCard();
-						this.setState({ newCardName: "" });
+						this.toggleAddingList();
+						this.setState({ newListName: "" });
 					}
 				});
 		}
@@ -41,7 +41,7 @@ class Addlist extends Component {
 			)
 		} else {
 			return (
-				<span onClick={this.toggleAddingList.bind(this)} className="addList">{this.props.listsSize > 0 ? "+ Add another list" : "+ Add list"}</span>
+				<span onClick={this.toggleAddingList.bind(this)} className="addList">{this.props.listsSize > 0 ? "+ Add another list" : "+ Add first list"}</span>
 			)
 		}
 	}

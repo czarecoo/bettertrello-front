@@ -6,7 +6,9 @@ import axios from 'axios';
 import Addlist from './Addlist';
 
 const getListStyle = () => ({
-	display: 'flex'
+	display: 'flex',
+	height: '95%',
+	overflow: "auto",
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -19,15 +21,22 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lists: []
+			board: null, lists: []
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
 	}
 	getBoards() {
-		axios.get('http://localhost:8080/boards/' + this.props.match.params.id + '/lists')
+		axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
 			.then(res => {
-				this.setState({ lists: res.data });
+				console.log(res);
+				if (res.data !== null && res.data !== undefined) {
+					this.setState({ board: res.data });
+					if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
+						this.setState({ lists: res.data.cardLists });
+					}
+				}
+
 			});
 	}
 	componentDidMount() {
@@ -72,9 +81,13 @@ class Board extends Component {
 			result.source.index,
 			result.destination.index
 		);
-		this.setState({
-			lists: reorderedLists,
-		});
+		this.setState({ lists: reorderedLists });
+		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: reorderedLists })
+			.then(res => {
+				if (res.status === 200) {
+					this.getBoards();
+				}
+			});
 	}
 
 	onDragEnd(result) {

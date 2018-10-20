@@ -13,7 +13,7 @@ import Header from './components/Header';
 
 ReactDOM.render(
 	<Router>
-		<div>
+		<div className="routerDiv">
 			<Header></Header>
 			<Route exact path='/' component={App} />
 			<Route path='/edit/:id' component={Edit} />
