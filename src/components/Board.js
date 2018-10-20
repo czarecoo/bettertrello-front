@@ -6,13 +6,12 @@ import axios from 'axios';
 import Addlist from './Addlist';
 
 const getListStyle = () => ({
-	display: 'flex',
-	overflow: 'auto',
+	display: 'flex'
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
 	userSelect: 'none',
-	width: '250px',
+	minWidth: '250px',
 	...draggableStyle,
 });
 
@@ -82,7 +81,6 @@ class Board extends Component {
 		if (!result.destination) {
 			return;
 		}
-		console.log(result)
 		if (result.type === "cards") {
 			this.onCardDrop(result);
 		}
@@ -122,7 +120,7 @@ class Board extends Component {
 								{...provided.droppableProps}
 							>
 								{lists}
-								<Addlist listsSize={this.state.lists === null || this.state.lists === undefined ? 0 : this.state.lists.length}></Addlist>
+								<Addlist boardId={this.props.match.params.id} getBoards={this.getBoards.bind(this)} listsSize={this.state.lists === null || this.state.lists === undefined ? 0 : this.state.lists.length}></Addlist>
 								{provided.placeholder}
 							</div>
 						)}

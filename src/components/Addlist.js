@@ -10,13 +10,14 @@ class Addlist extends Component {
 	}
 	addList() {
 		if (this.state.newListName !== "") {
-			axios.post('http://localhost:8080/lists', {
+			axios.post('http://localhost:8080/boards/' + this.props.boardId + '/lists', {
 				name: this.state.newListName,
 				cards: [],
 			})
 				.then(res => {
 					if (res.status === 200) {
 						this.props.getBoards();
+						this.toggleAddingCard();
 					}
 				});
 		}
@@ -26,13 +27,13 @@ class Addlist extends Component {
 		this.setState({ isAddingList: !this.state.isAddingList });
 	}
 	onChange(event) {
-		this.setState({ newListName: event.value });
+		this.setState({ newListName: event.target.value });
 	}
 	render() {
 		if (this.state.isAddingList) {
 			return (
 				<div className="addList addListBig">
-					<input placeholder="Enter list name..." onChange={this.onChange.bind(this)} defaultValue={this.state.newListName}></input>
+					<input placeholder="Enter list name..." onChange={this.onChange.bind(this)} value={this.state.newListName}></input>
 					<br></br><button className="btn addCardBtn" onClick={this.addList.bind(this)}>Add list</button>
 					<label className="xbtn btn" onClick={this.toggleAddingList.bind(this)}>X</label>
 				</div>

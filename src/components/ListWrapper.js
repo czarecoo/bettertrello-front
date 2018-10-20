@@ -25,7 +25,7 @@ class Board extends Component {
 						</div>
 					)}
 				</Droppable>
-				<Addcard getBoards={this.props.getBoards} listSize={this.props.list.cards === null || this.props.list.cards === undefined ? 0 : this.props.list.cards.length}></Addcard>
+				<Addcard listId={this.props.list.id} getBoards={this.props.getBoards} listSize={this.props.list.cards === null || this.props.list.cards === undefined ? 0 : this.props.list.cards.length}></Addcard>
 			</li>
 		)
 	}

@@ -10,12 +10,11 @@ class Addcard extends Component {
 	}
 	addCard() {
 		if (this.state.newCardName !== "") {
-			axios.post('http://localhost:8080/cards', {
-				name: this.state.newCardName
-			})
+			axios.post('http://localhost:8080/lists/' + this.props.listId + '/cards', { name: this.state.newCardName })
 				.then(res => {
 					if (res.status === 200) {
 						this.props.getBoards();
+						this.toggleAddingCard();
 					}
 				});
 		}
@@ -24,13 +23,13 @@ class Addcard extends Component {
 		this.setState({ isAddingCard: !this.state.isAddingCard });
 	}
 	onChange(event) {
-		this.setState({ newCardName: event.value });
+		this.setState({ newCardName: event.target.value });
 	}
 	render() {
 		if (this.state.isAddingCard) {
 			return (
 				<div className="addCard">
-					<textarea height="30px" className="addCardTxtArea" placeholder="Enter title for this card..." onChange={this.onChange.bind(this)} defaultValue={this.state.newCardName}></textarea>
+					<textarea height="30px" className="addCardTxtArea" placeholder="Enter title for this card..." onChange={this.onChange.bind(this)} value={this.state.newCardName}></textarea>
 					<br></br><button className="btn addCardBtn" onClick={this.addCard.bind(this)}>Add card</button>
 					<label className="xbtn btn" onClick={this.toggleAddingCard.bind(this)}>X</label>
 				</div>
