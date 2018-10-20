@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import home from './home.png';
+import logo from './logo.png';
+import plus from './plus.png';
 
 class Header extends Component {
 	render() {
 		return (
 			<div className="header">
-				<div class="block left">
+				<div className="block left">
 					<Link className="btn btn-info btn-sm homebtn" to={`/`}>
-						<img src="home.png" alt="home" height="25" width="25"></img>
+						<img src={home} alt="home" height="25" width="25"></img>
 					</Link>
 				</div>
-				<div class="block center">
+				<div className="block center">
 					<Link to={`/`}>
-						<img className="logo" src="logo.png" alt="logo" height="30" width="170"></img>
+						<img className="logo" src={logo} alt="logo" height="30" width="170"></img>
 					</Link>
 				</div>
-				<div class="block right">
+				<div className="block right">
 					<Link className="btn btn-info btn-sm homebtn" to={`/`}>
-						<img src="plus.png" alt="plus" height="25" width="25"></img>
+						<img src={plus} alt="plus" height="25" width="25"></img>
 					</Link>
 				</div>
 			</div>
