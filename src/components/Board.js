@@ -74,6 +74,12 @@ class Board extends Component {
 				lists: listsCopy,
 			});
 		}
+		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: listsCopy })
+			.then(res => {
+				if (res.status === 200) {
+					this.getBoards();
+				}
+			});
 	}
 	onListDrop(result) {
 		const reorderedLists = UtilityFunctions.reorder(

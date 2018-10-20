@@ -8,18 +8,21 @@ class ListContent extends Component {
 		}
 		return (
 			this.props.cards.map((item, index) => (
-				<Draggable key={item.id} draggableId={item.id} index={index}>
-					{(provided, snapshot) => (
-						<div
-							ref={provided.innerRef}
-							{...provided.draggableProps}
-							{...provided.dragHandleProps}
-							className="card"
-						>
-							{item.name}
-						</div>
-					)}
-				</Draggable>
+				item !== undefined ?
+					<Draggable key={item.id} draggableId={item.id} index={index}>
+						{(provided, snapshot) => (
+							<div
+								ref={provided.innerRef}
+								{...provided.draggableProps}
+								{...provided.dragHandleProps}
+								className="card"
+							>
+								{item.name}
+							</div>
+						)}
+					</Draggable>
+					: null
+
 			))
 		)
 	}
