@@ -18,6 +18,7 @@ class Addlist extends Component {
 					if (res.status === 200) {
 						this.props.getBoards();
 						this.toggleAddingCard();
+						this.setState({ newCardName: "" });
 					}
 				});
 		}
@@ -33,7 +34,7 @@ class Addlist extends Component {
 		if (this.state.isAddingList) {
 			return (
 				<div className="addList addListBig">
-					<input placeholder="Enter list name..." onChange={this.onChange.bind(this)} value={this.state.newListName}></input>
+					<input autoFocus placeholder="Enter list name..." onChange={this.onChange.bind(this)} value={this.state.newListName}></input>
 					<br></br><button className="btn addCardBtn" onClick={this.addList.bind(this)}>Add list</button>
 					<label className="xbtn btn" onClick={this.toggleAddingList.bind(this)}>X</label>
 				</div>
