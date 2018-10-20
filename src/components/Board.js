@@ -19,7 +19,7 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lists: UtilityFunctions.getTestData()
+			lists: []
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);

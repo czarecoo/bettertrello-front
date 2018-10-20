@@ -7,7 +7,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			boards: [{ id: 123, name: "board1" }]
+			boards: []
 		};
 	}
 
