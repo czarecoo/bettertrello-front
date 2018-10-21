@@ -103,7 +103,7 @@ class Board extends Component {
 			});
 		}
 		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: listsCopy }).then((res) => {
-			this.getBoards(true);
+			this.getBoards();
 		});
 
 	}
@@ -115,7 +115,7 @@ class Board extends Component {
 		);
 		this.setState({ lists: reorderedLists });
 		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: reorderedLists }).then((res) => {
-			this.getBoards(true);
+			this.getBoards();
 		});
 	}
 
