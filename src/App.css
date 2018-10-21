@@ -4,10 +4,10 @@ html, body, .container, .routerDiv, .list, #root
 }
 .cont{
 	padding:0;
-	height: calc(100% - 57px); 
+	height: calc(100% - 100px); 
 }
 ol, ul {
-	height: calc(100% - 57px); 
+	height: calc(100% - 100px); 
     list-style: none;
     margin: 0;
     padding: 0;

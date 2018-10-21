@@ -30,7 +30,7 @@ class Create extends Component {
 	render() {
 		const { name } = this.state;
 		return (
-			<div className="container">
+			<div className="container cont">
 				<div className="panel panel-default">
 					<div className="panel-heading">
 						<h3 className="panel-title">
