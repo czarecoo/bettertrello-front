@@ -30,7 +30,7 @@ class Addcard extends Component {
 		if (this.state.isAddingCard) {
 			return (
 				<div className="addCard">
-					<textarea autoFocus height="30px" className="addCardTxtArea" placeholder="Enter title for this card..." onChange={this.onChange.bind(this)} value={this.state.newCardName}></textarea>
+					<textarea autoFocus height="30px" onKeyPress={(e) => { if (e.key === 'Enter') this.addCard() }} className="addCardTxtArea" placeholder="Enter title for this card..." onChange={this.onChange.bind(this)} value={this.state.newCardName}></textarea>
 					<br></br><button className="btn addCardBtn" onClick={this.addCard.bind(this)}>Add card</button>
 					<label className="xbtn btn" onClick={this.toggleAddingCard.bind(this)}>X</label>
 				</div>
