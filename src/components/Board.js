@@ -46,12 +46,11 @@ class Board extends Component {
 	}
 	setBoards() {
 		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: this.state.lists }).then(res => {
-			if (res.request.fromCache === true) {
-				return;
+			if (res.status === 200) {
+				this.setState({
+					isDragging: false
+				});
 			}
-			this.setState({
-				isDragging: false
-			});
 		});
 	}
 	componentDidMount() {
