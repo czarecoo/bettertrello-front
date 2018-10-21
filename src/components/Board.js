@@ -138,8 +138,9 @@ class Board extends Component {
 				</Draggable>
 			)));
 		return (
-			<ul>
-				<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
+			<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
+				{this.state.board !== null ? <h3>{this.state.board.name}</h3> : null}
+				<ul>
 					<Droppable droppableId="droppable" direction="horizontal" type="lists">
 						{(provided, snapshot) => (
 							<div
@@ -154,8 +155,8 @@ class Board extends Component {
 							</div>
 						)}
 					</Droppable>
-				</DragDropContext>
-			</ul>
+				</ul>
+			</DragDropContext>
 		)
 	}
 }
