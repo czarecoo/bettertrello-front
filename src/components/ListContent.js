@@ -22,7 +22,6 @@ class ListContent extends Component {
 						)}
 					</Draggable>
 					: null
-
 			))
 		)
 	}
