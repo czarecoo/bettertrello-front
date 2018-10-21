@@ -3,7 +3,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ListWrapper from './ListWrapper';
 import UtilityFunctions from './UtilityFunctions';
 import axios from 'axios';
+import { setup } from 'axios-cache-adapter'
 import Addlist from './Addlist';
+
+const api = setup({
+	cache: {
+		maxAge: 24 * 60 * 1000
+	}
+})
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -26,26 +33,47 @@ class Board extends Component {
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
 	}
-	getBoards() {
-		axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
-			.then(res => {
-				console.log(res);
-				if (res.data !== null && res.data !== undefined) {
-					this.setState({ board: res.data });
-					if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
-						this.setState({ lists: res.data.cardLists });
+	getBoards(useCache) {
+		if (useCache === false || useCache === null || useCache === undefined) {
+			axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
+				.then(res => {
+					if (res.data !== null && res.data !== undefined) {
+						this.setState({ board: res.data });
+						if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
+							this.setState({ lists: res.data.cardLists });
+						}
 					}
-				}
 
-			});
+				});
+		} else {
+			api({
+				url: 'http://localhost:8080/boards/' + this.props.match.params.id,
+				method: 'get'
+			})
+				.then(res => {
+					if (res.request.fromCache === true) {
+						return;
+					}
+					if (res.data !== null && res.data !== undefined) {
+						this.setState({ board: res.data });
+						if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
+							this.setState({ lists: res.data.cardLists });
+						}
+					}
+
+				});
+		}
 	}
 	componentDidMount() {
 		this.getBoards();
+		this.interval = setInterval(() => { this.getBoards(true) }, 1000);
+	}
+	componentWillUnmount() {
+		clearInterval(this.interval);
 	}
 	onCardDrop(result) {
 		var listsCopy;
 		if (result.destination.droppableId === result.source.droppableId) {
-
 			const i = UtilityFunctions.getIndex(result.source.droppableId, this.state.lists);
 			listsCopy = this.state.lists;
 			const reorderedCards = UtilityFunctions.reorder(
@@ -57,11 +85,11 @@ class Board extends Component {
 			this.setState({
 				lists: listsCopy,
 			});
+
 		} else {
 			const i = UtilityFunctions.getIndex(result.source.droppableId, this.state.lists);
 			const j = UtilityFunctions.getIndex(result.destination.droppableId, this.state.lists);
 			listsCopy = this.state.lists;
-
 			const moveResult = UtilityFunctions.move(
 				listsCopy[i].cards,
 				listsCopy[j].cards,
@@ -71,15 +99,13 @@ class Board extends Component {
 			listsCopy[i].cards = moveResult[0];
 			listsCopy[j].cards = moveResult[1];
 			this.setState({
-				lists: listsCopy,
+				lists: listsCopy
 			});
 		}
-		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: listsCopy })
-			.then(res => {
-				if (res.status === 200) {
-					this.getBoards();
-				}
-			});
+		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: listsCopy }).then((res) => {
+			this.getBoards(true);
+		});
+
 	}
 	onListDrop(result) {
 		const reorderedLists = UtilityFunctions.reorder(
@@ -88,12 +114,9 @@ class Board extends Component {
 			result.destination.index
 		);
 		this.setState({ lists: reorderedLists });
-		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: reorderedLists })
-			.then(res => {
-				if (res.status === 200) {
-					this.getBoards();
-				}
-			});
+		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: reorderedLists }).then((res) => {
+			this.getBoards(true);
+		});
 	}
 
 	onDragEnd(result) {

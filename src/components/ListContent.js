@@ -9,7 +9,7 @@ class ListContent extends Component {
 		return (
 			this.props.cards.map((item, index) => (
 				item !== undefined ?
-					<Draggable key={item.id} draggableId={item.id} index={index}>
+					<Draggable key={index} draggableId={item.id} index={index}>
 						{(provided, snapshot) => (
 							<div
 								ref={provided.innerRef}

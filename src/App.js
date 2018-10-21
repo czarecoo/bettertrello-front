@@ -10,11 +10,18 @@ class App extends Component {
 		};
 	}
 
-	componentDidMount() {
+	getBoards() {
 		axios.get('http://localhost:8080/boards')
 			.then(res => {
 				this.setState({ boards: res.data });
 			});
+	}
+	componentDidMount() {
+		this.getBoards();
+		this.interval = setInterval(() => this.getBoards(), 5000);
+	}
+	componentWillUnmount() {
+		clearInterval(this.interval);
 	}
 
 	render() {
@@ -38,7 +45,7 @@ class App extends Component {
 							<Link to="/create">
 								<li className="boardMin">
 									Create board
-							</li>
+								</li>
 							</Link>
 						</ul>
 					</div>
