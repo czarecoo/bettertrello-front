@@ -4,6 +4,8 @@ import ListWrapper from './ListWrapper';
 import UtilityFunctions from './UtilityFunctions';
 import axios from 'axios';
 import Addlist from './Addlist';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -21,12 +23,15 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			board: null, lists: [], isDragging: false
+			board: null, lists: [], isDragging: false, cookies: this.props.cookies
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
 		this.setBoards.bind(this);
 	}
+	static propTypes = {
+		cookies: instanceOf(Cookies).isRequired
+	};
 	getBoards() {
 		axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
 			.then(res => {
@@ -38,6 +43,7 @@ class Board extends Component {
 				}
 				if (res.data !== null && res.data !== undefined) {
 					this.setState({ board: res.data });
+					this.state.cookies.set(this.props.match.params.id, res.data, { maxAge: 3600 * 24, path: '/' });
 					if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
 						this.setState({ lists: res.data.cardLists });
 					}
@@ -54,6 +60,9 @@ class Board extends Component {
 		});
 	}
 	componentDidMount() {
+		if (this.state.cookies.get(this.props.match.params.id) !== undefined) {
+			this.setState({ boards: this.state.cookies.get(this.props.match.params.id), lists: this.state.cookies.get(this.props.match.params.id).cardLists });
+		}
 		this.getBoards();
 		this.interval = setInterval(() => { this.getBoards() }, 1000);
 	}
@@ -162,4 +171,4 @@ class Board extends Component {
 }
 
 
-export default Board;
+export default withCookies(Board);

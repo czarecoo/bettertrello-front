@@ -36,12 +36,12 @@ class Addlist extends Component {
 				<div className="addList addListBig">
 					<input autoFocus placeholder="Enter list name..." onKeyPress={(e) => { if (e.key === 'Enter') this.addList() }} onChange={this.onChange.bind(this)} value={this.state.newListName}></input>
 					<br></br><button className="btn addCardBtn" onClick={this.addList.bind(this)}>Add list</button>
-					<label tabindex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingList() }} className="xbtn btn" onClick={this.toggleAddingList.bind(this)}>X</label>
+					<label tabIndex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingList() }} className="xbtn btn" onClick={this.toggleAddingList.bind(this)}>X</label>
 				</div>
 			)
 		} else {
 			return (
-				<span tabindex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingList() }} onClick={this.toggleAddingList.bind(this)} className="addList">{this.props.listsSize > 0 ? "+ Add another list" : "+ Add first list"}</span>
+				<span tabIndex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingList() }} onClick={this.toggleAddingList.bind(this)} className="addList">{this.props.listsSize > 0 ? "+ Add another list" : "+ Add first list"}</span>
 			)
 		}
 	}

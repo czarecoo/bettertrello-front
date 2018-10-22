@@ -32,12 +32,12 @@ class Addcard extends Component {
 				<div className="addCard">
 					<textarea autoFocus height="30px" onKeyPress={(e) => { if (e.key === 'Enter') { e.preventDefault(); this.addCard(); } }} className="addCardTxtArea" placeholder="Enter title for this card..." onChange={this.onChange.bind(this)} value={this.state.newCardName}></textarea>
 					<br></br><button className="btn addCardBtn" onClick={this.addCard.bind(this)}>Add card</button>
-					<label tabindex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingCard() }} className="xbtn btn" onClick={this.toggleAddingCard.bind(this)}>X</label>
+					<label tabIndex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingCard() }} className="xbtn btn" onClick={this.toggleAddingCard.bind(this)}>X</label>
 				</div>
 			)
 		} else {
 			return (
-				<span tabindex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingCard() }} onClick={this.toggleAddingCard.bind(this)} className="addCard">{this.props.listSize > 0 ? "+ Add another card" : "+ Add card"}</span>
+				<span tabIndex="0" onKeyPress={(e) => { if (e.key === 'Enter') this.toggleAddingCard() }} onClick={this.toggleAddingCard.bind(this)} className="addCard">{this.props.listSize > 0 ? "+ Add another card" : "+ Add card"}</span>
 			)
 		}
 	}
