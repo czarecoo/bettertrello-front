@@ -32,11 +32,14 @@ class Board extends Component {
 	static propTypes = {
 		cookies: instanceOf(Cookies).isRequired
 	};
-	getBoards() {
+	getBoards(force) {
 		axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
 			.then(res => {
-				if (res.request.fromCache === true) {
-					return;
+
+				if (force === undefined || force !== true) {
+					if (res.request.fromCache === true) {
+						return;
+					}
 				}
 				if (this.state.isDragging) {
 					return
@@ -63,7 +66,7 @@ class Board extends Component {
 		if (this.state.cookies.get(this.props.match.params.id) !== undefined) {
 			this.setState({ boards: this.state.cookies.get(this.props.match.params.id), lists: this.state.cookies.get(this.props.match.params.id).cardLists });
 		}
-		this.getBoards();
+		this.getBoards(true);
 		this.interval = setInterval(() => { this.getBoards() }, 1000);
 	}
 	componentWillUnmount() {
