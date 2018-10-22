@@ -8,7 +8,7 @@ const getListStyle = isDraggingOver => ({
 	minHeight: 32,
 });
 
-class Board extends Component {
+class ListWrapper extends Component {
 	render() {
 		return (
 			<li>
@@ -32,4 +32,4 @@ class Board extends Component {
 }
 
 
-export default Board;
+export default ListWrapper;

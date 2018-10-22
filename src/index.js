@@ -9,18 +9,20 @@ import Edit from './components/Edit';
 import Create from './components/Create';
 import Board from './components/Board';
 import Header from './components/Header';
-
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-	<Router>
-		<div className="routerDiv">
-			<Header></Header>
-			<Route exact path='/' component={App} />
-			<Route path='/edit/:id' component={Edit} />
-			<Route path='/create' component={Create} />
-			<Route path='/board/:id' component={Board} />
-		</div>
-	</Router>,
+	<CookiesProvider>
+		<Router>
+			<div className="routerDiv">
+				<Header></Header>
+				<Route exact path='/' component={App} />
+				<Route path='/edit/:id' component={Edit} />
+				<Route path='/create' component={Create} />
+				<Route path='/board/:id' component={Board} />
+			</div>
+		</Router>
+	</CookiesProvider>,
 	document.getElementById('root')
 );
 serviceWorker.unregister();
