@@ -135,24 +135,27 @@ class Board extends Component {
 		this.setState({ modalIsOpen: isOpen });
 	}
 	render() {
-		var lists = (
-			this.state.lists.map((list, index) => (
-				<Draggable key={list.id} draggableId={list.id} index={index} isDragDisabled={this.state.modalIsOpen}>
-					{(provided, snapshot) => (
-						<div
-							ref={provided.innerRef}
-							{...provided.draggableProps}
-							{...provided.dragHandleProps}
-							style={getItemStyle(
-								snapshot.isDragging,
-								provided.draggableProps.style
-							)}
-						>
-							<ListWrapper changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
-						</div>
-					)}
-				</Draggable>
-			)));
+		var lists;
+		if (this.state.lists !== null && this.state.lists !== undefined) {
+			lists = (
+				this.state.lists.map((list, index) => (
+					<Draggable key={list.id} draggableId={list.id} index={index} isDragDisabled={this.state.modalIsOpen}>
+						{(provided, snapshot) => (
+							<div
+								ref={provided.innerRef}
+								{...provided.draggableProps}
+								{...provided.dragHandleProps}
+								style={getItemStyle(
+									snapshot.isDragging,
+									provided.draggableProps.style
+								)}
+							>
+								<ListWrapper changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
+							</div>
+						)}
+					</Draggable>
+				)));
+		}
 		return (
 			<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
 				{this.state.board !== null ? <h3>{this.state.board.name}</h3> : ""}
