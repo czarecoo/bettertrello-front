@@ -66,7 +66,7 @@ class Board extends Component {
 	}
 	componentDidMount() {
 		if (this.state.cookies.get(this.props.match.params.id) !== undefined) {
-			this.setState({ boards: this.state.cookies.get(this.props.match.params.id), lists: this.state.cookies.get(this.props.match.params.id).cardLists });
+			this.setState({ board: this.state.cookies.get(this.props.match.params.id), lists: this.state.cookies.get(this.props.match.params.id).cardLists });
 		}
 		this.getBoards(true);
 		this.interval = setInterval(() => { this.getBoards() }, 1000);
@@ -155,7 +155,7 @@ class Board extends Component {
 			)));
 		return (
 			<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
-				{this.state.board !== null ? <h3>{this.state.board.name}</h3> : null}
+				{this.state.board !== null ? <h3>{this.state.board.name}</h3> : ""}
 				<ul>
 					<Droppable droppableId="droppable" direction="horizontal" type="lists">
 						{(provided, snapshot) => (
