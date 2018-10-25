@@ -20,7 +20,7 @@ class ListWrapper extends Component {
 							style={getListStyle(snapshot.isDraggingOver)}
 						>
 
-							<ListContent cards={this.props.list.cards}></ListContent>
+							<ListContent changeModalState={this.props.changeModalState.bind(this)} list={this.props.list} listId={this.props.list.id} cards={this.props.list.cards}></ListContent>
 							{provided.placeholder}
 						</div>
 					)}

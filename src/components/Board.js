@@ -23,11 +23,12 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			board: null, lists: [], isDragging: false, cookies: this.props.cookies
+			board: null, lists: [], isDragging: false, cookies: this.props.cookies, modalIsOpen: false
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
 		this.setBoards.bind(this);
+		this.changeModalState.bind(this);
 	}
 	static propTypes = {
 		cookies: instanceOf(Cookies).isRequired
@@ -35,7 +36,6 @@ class Board extends Component {
 	getBoards(force) {
 		axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
 			.then(res => {
-
 				if (force === undefined || force !== true) {
 					if (res.request.fromCache === true) {
 						return;
@@ -54,13 +54,15 @@ class Board extends Component {
 			});
 	}
 	setBoards() {
-		axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: this.state.lists }).then(res => {
-			if (res.status === 200) {
-				this.setState({
-					isDragging: false
-				});
-			}
-		});
+		if (this.state.board !== null && this.state.board !== undefined) {
+			axios.put('http://localhost:8080/boards/', { id: this.state.board.id, name: this.state.board.name, cardLists: this.state.lists }).then(res => {
+				if (res.status === 200) {
+					this.setState({
+						isDragging: false
+					});
+				}
+			});
+		}
 	}
 	componentDidMount() {
 		if (this.state.cookies.get(this.props.match.params.id) !== undefined) {
@@ -129,11 +131,13 @@ class Board extends Component {
 			this.onListDrop(result);
 		}
 	}
-
+	changeModalState(isOpen) {
+		this.setState({ modalIsOpen: isOpen });
+	}
 	render() {
 		var lists = (
 			this.state.lists.map((list, index) => (
-				<Draggable key={list.id} draggableId={list.id} index={index}>
+				<Draggable key={list.id} draggableId={list.id} index={index} isDragDisabled={this.state.modalIsOpen}>
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}
@@ -144,7 +148,7 @@ class Board extends Component {
 								provided.draggableProps.style
 							)}
 						>
-							<ListWrapper list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
+							<ListWrapper changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
 						</div>
 					)}
 				</Draggable>
