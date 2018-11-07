@@ -26,7 +26,7 @@ class App extends Component {
 			this.setState({ boards: this.state.cookies.get("boards") });
 		}
 		this.getBoards();
-		this.interval = setInterval(() => this.getBoards(), 5000);
+		this.interval = setInterval(() => this.getBoards(), 1000);
 	}
 	componentWillUnmount() {
 		clearInterval(this.interval);
