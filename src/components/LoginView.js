@@ -3,13 +3,12 @@ import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 import { withAlert } from 'react-alert';
 import axios from 'axios';
-import qs from 'qs';
 
 class LoginView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: "", password: "", cookies: this.props.cookies,
+			login: "admin", password: "@admin@", cookies: this.props.cookies,
 		};
 	}
 
@@ -32,22 +31,32 @@ class LoginView extends React.Component {
 	}
 
 	login() {
-		const data = {
-			"grant_type": "password",
-			"username": this.state.login,
-			"password": this.state.password
-		};
-		const url = "http://localhost:8080/oauth/token";
 		const options = {
-			method: 'POST',
-			headers: { "Authorisation": "Basic ZnJvbnRlbmQ6c2VjcmV0" },
-			data: qs.stringify(data),
-			url,
-			crossDomain: true,
+			method: "POST",
+			data: {
+				"grant_type": "password",
+				"username": this.state.login,
+				"password": this.state.password
+			},
+			withCredentials: true,
+			auth: {
+				username: 'frontend',
+				password: 'secret'
+			},
+			headers: {
+				'Authorization': 'Basic ZnJvbnRlbmQ6c2VjcmV0',
+				'Accept': 'application/json',
+				'Content-Type': 'application/from-data',
+			},
+			url: "http://localhost:8080/oauth/token",
 		};
-		axios(options).then((result) => {
-			this.props.history.push("/app")
-		});
+		axios(options)
+			.then((result) => {
+				console.log(result);
+				this.props.history.push("/app")
+			}).catch(function (error) {
+				console.log(error);
+			});
 	}
 
 	render() {

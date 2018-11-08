@@ -8,7 +8,7 @@ class MainView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoggingIn: false, cookies: this.props.cookies,
+			isLoggingIn: true, cookies: this.props.cookies,
 		};
 	}
 	static propTypes = {
