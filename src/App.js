@@ -36,6 +36,7 @@ class App extends Component {
 		return (
 			<div className="container cont">
 				<div className="panel panel-default">
+					<button onClick={() => this.props.logout()}>Logout</button>
 					<div className="panel-heading">
 						<h3 className="panel-title">
 							Boards

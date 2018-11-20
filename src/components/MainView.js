@@ -11,6 +11,17 @@ class MainView extends React.Component {
 		};
 	}
 
+	login() {
+		this.setState({
+			isLoggedIn: true
+		});
+	}
+	logout() {
+		this.setState({
+			isLoggedIn: false
+		});
+	}
+
 	changeView() {
 		this.setState(prevState => ({
 			isLoggingIn: !prevState.isLoggingIn
@@ -20,12 +31,12 @@ class MainView extends React.Component {
 	render() {
 		if (this.state.isLoggedIn === true) {
 			return (
-				<App />
+				<App logout={this.logout.bind(this)} />
 			)
 		} else {
 			return (
 				<div className="MainView">
-					{this.state.isLoggingIn ? <LoginView setToken={this.setToken.bind(this)} /> : <RegisterView />}
+					{this.state.isLoggingIn ? <LoginView login={this.login.bind(this)} /> : <RegisterView />}
 					<label><input type="radio" checked={!this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Register </label>{" / "}
 					<label><input type="radio" checked={this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Login </label><br></br>
 				</div>

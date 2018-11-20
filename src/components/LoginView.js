@@ -44,7 +44,7 @@ class LoginView extends React.Component {
 		}).then((result) => {
 			console.log(result);
 			if (result.status === 200) {
-				this.props.setToken(result.data.access_token, result.data.refresh_token, this.state.login)
+				this.props.login()
 			}
 		}).catch(function (error) {
 			console.log(error);
