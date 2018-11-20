@@ -31,24 +31,31 @@ class LoginView extends React.Component {
 	}
 
 	login() {
-		const data = new FormData();
-		data.append('grant_type', 'password');
-		data.append('username', this.state.login);
-		data.append('password', this.state.password);
-		var session_url = 'http://localhost:8080/oauth/token';
-		axios.post(session_url, data, {
-			auth: {
-				username: "frontend",
-				password: "secret"
-			}
-		}).then((result) => {
-			console.log(result);
-			if (result.status === 200) {
-				this.props.login()
-			}
-		}).catch(function (error) {
-			console.log(error);
-		});
+		if (this.state.login === "" || this.state.password === "") {
+			this.props.alert.error('Login and password field cannot be empty');
+		} else {
+			const data = new FormData();
+			data.append('grant_type', 'password');
+			data.append('username', this.state.login);
+			data.append('password', this.state.password);
+			var session_url = 'http://localhost:8080/oauth/token';
+			axios.post(session_url, data, {
+				auth: {
+					username: "frontend",
+					password: "secret"
+				}
+			}).then((result) => {
+				console.log(result);
+				if (result.status === 200) {
+					this.props.login()
+				} else {
+					this.props.alert.error('Login failed');
+				}
+			}).catch((error) => {
+				console.log(error);
+				this.props.alert.error('Login failed');
+			});
+		}
 	}
 
 	render() {
@@ -64,4 +71,4 @@ class LoginView extends React.Component {
 		);
 	}
 }
-export default withAlert(withCookies(LoginView));
+export default withCookies(withAlert(LoginView));
