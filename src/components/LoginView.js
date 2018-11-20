@@ -8,7 +8,7 @@ class LoginView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: "admin", password: "@admin@", cookies: this.props.cookies,
+			login: 'admin', password: '@admin@', cookies: this.props.cookies,
 		};
 	}
 
@@ -31,32 +31,24 @@ class LoginView extends React.Component {
 	}
 
 	login() {
-		const options = {
-			method: "POST",
-			data: {
-				"grant_type": "password",
-				"username": this.state.login,
-				"password": this.state.password
-			},
-			withCredentials: true,
+		const data = new FormData();
+		data.append('grant_type', 'password');
+		data.append('username', this.state.login);
+		data.append('password', this.state.password);
+		var session_url = 'http://localhost:8080/oauth/token';
+		axios.post(session_url, data, {
 			auth: {
-				username: 'frontend',
-				password: 'secret'
-			},
-			headers: {
-				'Authorization': 'Basic ZnJvbnRlbmQ6c2VjcmV0',
-				'Accept': 'application/json',
-				'Content-Type': 'application/from-data',
-			},
-			url: "http://localhost:8080/oauth/token",
-		};
-		axios(options)
-			.then((result) => {
-				console.log(result);
-				this.props.history.push("/app")
-			}).catch(function (error) {
-				console.log(error);
-			});
+				username: "frontend",
+				password: "secret"
+			}
+		}).then((result) => {
+			console.log(result);
+			if (result.status === 200) {
+				this.props.setToken(result.data.access_token, result.data.refresh_token, this.state.login)
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
 	}
 
 	render() {

@@ -1,22 +1,14 @@
 import React from 'react';
 import LoginView from './LoginView';
 import RegisterView from './RegisterView';
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
+import App from '../App';
 
 class MainView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoggingIn: true, cookies: this.props.cookies,
+			isLoggingIn: true, isLoggedIn: false
 		};
-	}
-	static propTypes = {
-		cookies: instanceOf(Cookies).isRequired
-	};
-
-	componentDidMount() {
-		//SocketManager.rejoinSession(this.state.cookies.get("login"), this.state.cookies.get("userId"), this.state.cookies.get("sessionId"));
 	}
 
 	changeView() {
@@ -26,13 +18,19 @@ class MainView extends React.Component {
 	}
 
 	render() {
-		return (
-			<div className="MainView">
-				{this.state.isLoggingIn ? <LoginView /> : <RegisterView />}
-				<label><input type="radio" checked={!this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Register </label>{" / "}
-				<label><input type="radio" checked={this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Login </label><br></br>
-			</div>
-		);
+		if (this.state.isLoggedIn === true) {
+			return (
+				<App />
+			)
+		} else {
+			return (
+				<div className="MainView">
+					{this.state.isLoggingIn ? <LoginView setToken={this.setToken.bind(this)} /> : <RegisterView />}
+					<label><input type="radio" checked={!this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Register </label>{" / "}
+					<label><input type="radio" checked={this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Login </label><br></br>
+				</div>
+			);
+		}
 	}
 }
-export default withCookies(MainView);
+export default MainView;
