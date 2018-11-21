@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { Link } from 'react-router-dom';
 
 class Create extends Component {
@@ -21,7 +21,7 @@ class Create extends Component {
 
 		const { name, cardLists } = this.state;
 
-		axios.post('http://localhost:8080/boards', { name, cardLists })
+		axiosInstance.post('/boards', { name, cardLists })
 			.then((result) => {
 				this.props.history.push("/")
 			});

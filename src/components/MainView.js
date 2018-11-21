@@ -4,6 +4,7 @@ import RegisterView from './RegisterView';
 import App from '../App';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+import axiosInstance from './axiosInstance';
 
 class MainView extends React.Component {
 	constructor(props) {
@@ -18,6 +19,7 @@ class MainView extends React.Component {
 
 	componentDidMount() {
 		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
+			axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
 			this.setState({
 				token: this.state.cookies.get("token")
 			});
@@ -32,6 +34,7 @@ class MainView extends React.Component {
 		});
 	}
 	logout() {
+		axiosInstance.defaults.headers.common['Authorization'] = '';
 		this.state.cookies.remove("username");
 		this.state.cookies.remove("token");
 		this.state.cookies.remove("refresh_token");

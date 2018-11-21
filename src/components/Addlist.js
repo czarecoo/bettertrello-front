@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 class Addlist extends Component {
 	constructor(props) {
@@ -10,17 +10,18 @@ class Addlist extends Component {
 	}
 	addList() {
 		if (this.state.newListName !== "") {
-			axios.post('http://localhost:8080/boards/' + this.props.boardId + '/lists', {
+			axiosInstance.post('/boards/' + this.props.boardId + '/lists', {
 				name: this.state.newListName,
 				cards: [],
-			})
-				.then(res => {
-					if (res.status === 200) {
-						this.props.getBoards();
-						this.toggleAddingList();
-						this.setState({ newListName: "" });
-					}
-				});
+			}).then(res => {
+				if (res.status === 200) {
+					this.props.getBoards();
+					this.toggleAddingList();
+					this.setState({ newListName: "" });
+				} else {
+					console.log(res);
+				}
+			}).catch((err) => console.log(err));
 		}
 
 	}

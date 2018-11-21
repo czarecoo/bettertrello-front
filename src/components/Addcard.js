@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 class Addcard extends Component {
 	constructor(props) {
@@ -10,14 +10,16 @@ class Addcard extends Component {
 	}
 	addCard() {
 		if (this.state.newCardName !== "") {
-			axios.post('http://localhost:8080/lists/' + this.props.listId + '/cards', { name: this.state.newCardName })
+			axiosInstance.post('/lists/' + this.props.listId + '/cards', { name: this.state.newCardName })
 				.then(res => {
 					if (res.status === 200) {
 						this.props.getBoards();
 						this.toggleAddingCard();
 						this.setState({ newCardName: "" });
+					} else {
+						console.log(res);
 					}
-				});
+				}).catch((err) => console.log(err));
 		}
 	}
 	toggleAddingCard() {

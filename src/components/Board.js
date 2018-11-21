@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ListWrapper from './ListWrapper';
 import UtilityFunctions from './UtilityFunctions';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import Addlist from './Addlist';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+import history from './history';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -34,7 +35,7 @@ class Board extends Component {
 		cookies: instanceOf(Cookies).isRequired
 	};
 	getBoards(force) {
-		axios.get('http://localhost:8080/boards/' + this.props.match.params.id)
+		axiosInstance.get('/boards/' + this.props.match.params.id)
 			.then(res => {
 				if (force === undefined || force !== true) {
 					if (res.request.fromCache === true) {
@@ -51,22 +52,31 @@ class Board extends Component {
 						this.setState({ lists: res.data.cardLists });
 					}
 				}
+			}).catch(() => {
+				history.push('/');
 			});
 	}
 	setBoards() {
 		if (this.state.board !== null && this.state.board !== undefined) {
-			axios.put('http://localhost:8080/boards/' + this.props.match.params.id, { id: this.state.board.id, name: this.state.board.name, cardLists: this.state.lists }).then(res => {
+			axiosInstance.put('/boards/' + this.props.match.params.id, { id: this.state.board.id, name: this.state.board.name, cardLists: this.state.lists }).then(res => {
 				if (res.status === 200) {
 					this.setState({
 						isDragging: false
 					});
+				} else {
+					console.log(res);
 				}
+			}).catch((err) => {
+				console.log(err);
 			});
 		}
 	}
 	componentDidMount() {
 		if (this.state.cookies.get(this.props.match.params.id) !== undefined) {
 			this.setState({ board: this.state.cookies.get(this.props.match.params.id), lists: this.state.cookies.get(this.props.match.params.id).cardLists });
+		}
+		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
+			axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
 		}
 		this.getBoards(true);
 		this.interval = setInterval(() => { this.getBoards() }, 1000);

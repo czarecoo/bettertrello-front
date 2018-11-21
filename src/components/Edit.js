@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import { Link } from 'react-router-dom';
 
 class Edit extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -12,7 +11,7 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:8080/contacts/' + this.props.match.params.id)
+		axiosInstance.get('/contacts/' + this.props.match.params.id)
 			.then(res => {
 				this.setState({ contact: res.data });
 			});
@@ -29,7 +28,7 @@ class Edit extends Component {
 
 		const { name, address, city, postalCode, phone } = this.state.contact;
 
-		axios.put('http://localhost:8080/contacts/' + this.props.match.params.id, { name, address, city, postalCode, phone })
+		axiosInstance.put('/contacts/' + this.props.match.params.id, { name, address, city, postalCode, phone })
 			.then((result) => {
 				this.props.history.push("/show/" + this.props.match.params.id)
 			});

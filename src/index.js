@@ -1,7 +1,8 @@
 import * as serviceWorker from './serviceWorker';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
+import history from './components/history';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Edit from './components/Edit';
@@ -23,7 +24,7 @@ const options = {
 ReactDOM.render(
 	<AlertProvider template={AlertTemplate} {...options}>
 		<CookiesProvider>
-			<BrowserRouter>
+			<Router history={history}>
 				<div className="routerDiv">
 					<Header />
 					<Route exact path='/' component={MainView} />
@@ -31,7 +32,7 @@ ReactDOM.render(
 					<Route path='/create' component={Create} />
 					<Route path='/board/:id' component={Board} />
 				</div>
-			</BrowserRouter>
+			</Router>
 		</CookiesProvider>
 	</AlertProvider>,
 	document.getElementById('root')

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withAlert } from 'react-alert';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 class LoginView extends React.Component {
 	constructor(props) {
@@ -22,8 +22,8 @@ class LoginView extends React.Component {
 			data.append('grant_type', 'password');
 			data.append('username', this.state.login);
 			data.append('password', this.state.password);
-			var session_url = 'http://localhost:8080/oauth/token';
-			axios.post(session_url, data, {
+			var session_url = '/oauth/token';
+			axiosInstance.post(session_url, data, {
 				auth: {
 					username: "frontend",
 					password: "secret"
@@ -31,7 +31,7 @@ class LoginView extends React.Component {
 			}).then((result) => {
 				console.log(result);
 				if (result.status === 200) {
-					axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.data.access_token;
+					axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + result.data.access_token;
 					this.props.login(this.state.login, result.data.access_token, result.data.refresh_token, result.data.expires_in)
 				} else {
 					this.props.alert.error('Login failed');

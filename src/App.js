@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from './components/axiosInstance';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+import history from './components/history';
 
 class App extends Component {
 	constructor(props) {
@@ -15,21 +16,22 @@ class App extends Component {
 		cookies: instanceOf(Cookies).isRequired
 	};
 	getBoards() {
-		axios.get('http://localhost:8080/boards')
+		axiosInstance.get('/boards')
 			.then(res => {
 				this.setState({ boards: res.data });
 				this.state.cookies.set("boards", res.data, { maxAge: 3600 * 24, path: '/' });
+			}).catch(() => {
+				this.state.cookies.remove("boards");
+				this.state.cookies.remove("username");
+				this.state.cookies.remove("token");
+				this.state.cookies.remove("refresh_token");
+				history.push('/');
 			});
 	}
 	componentDidMount() {
 		if (this.state.cookies.get("boards") !== undefined) {
 			this.setState({ boards: this.state.cookies.get("boards") });
 		}
-		/*
-		if (this.state.cookies.get("token") !== undefined) {
-			axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
-		}
-*/
 		this.getBoards();
 		this.interval = setInterval(() => this.getBoards(), 1000);
 	}

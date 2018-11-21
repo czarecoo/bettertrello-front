@@ -1,6 +1,6 @@
 import React from 'react';
 import { withAlert } from 'react-alert';
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 class RegisterView extends React.Component {
 	constructor(props) {
@@ -19,7 +19,7 @@ class RegisterView extends React.Component {
 		if (login === "" || password === "") {
 			this.props.alert.error('Login and password field cannot be empty');
 		} else {
-			axios.post('http://localhost:8080/users', {
+			axiosInstance.post('/users', {
 				"username": login,
 				"password": password
 			})
