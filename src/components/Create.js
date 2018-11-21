@@ -56,7 +56,7 @@ class Create extends Component {
 								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"brown"} style={{ background: "brown" }}></button></li>
 							</ul>
 						</div>
-						<button onClick={this.onCreate.bind(this)} className="btn btn-default">Submit</button>
+						<button onClick={this.onCreate.bind(this)} className="btn btn-default">Create</button>
 					</div>
 				</div>
 			</div>
