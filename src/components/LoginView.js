@@ -1,6 +1,4 @@
 import React from 'react';
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
 import { withAlert } from 'react-alert';
 import axios from 'axios';
 
@@ -8,24 +6,10 @@ class LoginView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: 'admin', password: '@admin@', cookies: this.props.cookies,
+			login: 'admin', password: '@admin@',
 		};
 	}
 
-	static propTypes = {
-		cookies: instanceOf(Cookies).isRequired
-	};
-
-	handleUpdate(dataFromServer) {
-		if (this.state.isLoggingIn === false) {
-			this.state.cookies.set("login", dataFromServer.login, { maxAge: 3600 * 24, path: '/' });
-			this.state.cookies.set("userId", dataFromServer.userId, { maxAge: 3600 * 24, path: '/' });
-			this.state.cookies.set("sessionId", dataFromServer.sessionId, { maxAge: 3600 * 24, path: '/' });
-			this.setState({
-				isLoggingIn: true,
-			});
-		}
-	}
 	handleChange(event) {
 		this.setState({ [event.target.name]: event.target.value });
 	}
@@ -47,7 +31,7 @@ class LoginView extends React.Component {
 			}).then((result) => {
 				console.log(result);
 				if (result.status === 200) {
-					this.props.login()
+					this.props.login(this.state.login, result.data.token, result.data.refresh_token, result.data.expires_in)
 				} else {
 					this.props.alert.error('Login failed');
 				}
@@ -71,4 +55,4 @@ class LoginView extends React.Component {
 		);
 	}
 }
-export default withCookies(withAlert(LoginView));
+export default withAlert(LoginView);

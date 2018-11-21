@@ -2,23 +2,41 @@ import React from 'react';
 import LoginView from './LoginView';
 import RegisterView from './RegisterView';
 import App from '../App';
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 
 class MainView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoggingIn: true, isLoggedIn: false
+			isLoggingIn: true, token: null, cookies: this.props.cookies,
 		};
 	}
+	static propTypes = {
+		cookies: instanceOf(Cookies).isRequired
+	};
 
-	login() {
+	componentDidMount() {
+		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
+			this.setState({
+				token: this.state.cookies.get("token")
+			});
+		}
+	}
+	login(login, token, refresh_token, expires_in) {
+		this.state.cookies.set("username", login, { maxAge: expires_in, path: '/' });
+		this.state.cookies.set("token", token, { maxAge: expires_in, path: '/' });
+		this.state.cookies.set("refresh_token", refresh_token, { maxAge: expires_in, path: '/' });
 		this.setState({
-			isLoggedIn: true
+			token: token
 		});
 	}
 	logout() {
+		this.state.cookies.remove("username");
+		this.state.cookies.remove("token");
+		this.state.cookies.remove("refresh_token");
 		this.setState({
-			isLoggedIn: false
+			token: null
 		});
 	}
 
@@ -29,7 +47,7 @@ class MainView extends React.Component {
 	}
 
 	render() {
-		if (this.state.isLoggedIn === true) {
+		if (this.state.token !== null) {
 			return (
 				<App logout={this.logout.bind(this)} />
 			)
@@ -44,4 +62,4 @@ class MainView extends React.Component {
 		}
 	}
 }
-export default MainView;
+export default withCookies(MainView);
