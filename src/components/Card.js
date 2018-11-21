@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
 import CardNameEdit from './CardNameEdit';
+import CardDescriptionEdit from './CardDescriptionEdit';
 
 class Card extends Component {
 	constructor(props) {
@@ -40,7 +41,7 @@ class Card extends Component {
 					</li>
 				) : "No members"}
 				<h2>Description</h2>
-				{this.props.card.description !== undefined ? this.props.card.description : "No description"}
+				<CardDescriptionEdit card={this.props.card} description={this.props.card.description} />
 				<h2>Comments</h2>
 				<textarea type="text" className="comments" name="comment" placeholder="Enter comment." value={this.state.comment} onChange={this.handleChange.bind(this)} style={{ resize: "none", }} /><br></br>
 				<button className="btn btn-md btn-primary" onClick={this.addComment.bind(this)}>Add comment</button>

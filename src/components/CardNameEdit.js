@@ -30,7 +30,7 @@ class CardNameEdit extends Component {
 	}
 	changeName() {
 		if (this.state.name !== this.props.name) {
-			if (this.state.comment !== '') {
+			if (this.state.name !== '') {
 				axiosInstance.patch('/cards/' + this.props.card.id, { "name": this.state.name })
 					.then((result) => {
 						if (result.status !== 200 && result.status !== 201) {
