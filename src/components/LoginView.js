@@ -31,7 +31,8 @@ class LoginView extends React.Component {
 			}).then((result) => {
 				console.log(result);
 				if (result.status === 200) {
-					this.props.login(this.state.login, result.data.token, result.data.refresh_token, result.data.expires_in)
+					axios.defaults.headers.common['Authorization'] = 'Bearer ' + result.data.access_token;
+					this.props.login(this.state.login, result.data.access_token, result.data.refresh_token, result.data.expires_in)
 				} else {
 					this.props.alert.error('Login failed');
 				}
