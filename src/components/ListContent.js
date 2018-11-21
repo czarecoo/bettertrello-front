@@ -7,23 +7,23 @@ class ListContent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalIsOpen: false
+			modalIsOpen: false, openModalId: null
 		};
 
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
 	}
 
-	openModal() {
+	openModal(id) {
 		if (!this.state.modalIsOpen) {
-			this.setState({ modalIsOpen: true });
+			this.setState({ modalIsOpen: true, openModalId: id });
 			this.props.changeModalState(true);
 		}
 	}
 
 	closeModal() {
 		if (this.state.modalIsOpen) {
-			this.setState({ modalIsOpen: false });
+			this.setState({ modalIsOpen: false, openModalId: null });
 			this.props.changeModalState(false);
 		}
 	}
@@ -42,11 +42,11 @@ class ListContent extends Component {
 									{...provided.draggableProps}
 									{...provided.dragHandleProps}
 									className="card"
-									onClick={this.openModal}
+									onClick={() => this.openModal(item.id)}
 								>
 									{item.name}
 									<Modal
-										isOpen={this.state.modalIsOpen}
+										isOpen={this.state.openModalId === item.id}
 										onRequestClose={this.closeModal}
 										className="cardModal"
 									>
