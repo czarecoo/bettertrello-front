@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import axiosInstance from './axiosInstance';
-import { Link } from 'react-router-dom';
 import { withAlert } from 'react-alert';
 
 class Create extends Component {
 	constructor() {
 		super();
 		this.state = {
-			name: '',
+			name: '', color: 'grey'
 		};
 	}
-	onChange = (e) => {
-		const state = this.state
-		state[e.target.name] = e.target.value;
-		this.setState(state);
+	handleChange(event) {
+		this.setState({ [event.target.name]: event.target.value });
 	}
 
-	onSubmit = (e) => {
+	onCreate(e) {
 		e.preventDefault();
-		if (this.state.name !== '') {
-			axiosInstance.post('/boards', { "name": this.state.name })
+		if (this.state.name !== '' && this.state.color !== '') {
+			axiosInstance.post('/boards', { "name": this.state.name, "color": this.state.color })
 				.then((result) => {
 					if (result.status === 201) {
 						this.props.history.push("/");
@@ -43,18 +40,23 @@ class Create extends Component {
 				<div className="panel panel-default">
 					<div className="panel-heading">
 						<h3 className="panel-title">
-							Create board
-            			</h3>
+							Create board <div className="btn btn-default" style={{ background: this.state.color }}></div>
+						</h3>
+
 					</div>
 					<div className="panel-body">
-						<h4><Link to="/">Cancel</Link></h4>
-						<form onSubmit={this.onSubmit}>
-							<div className="form-group">
-								<label>Name:</label>
-								<input type="text" className="form-control" name="name" value={name} onChange={this.onChange} placeholder="Enter new board name" />
-							</div>
-							<button type="submit" className="btn btn-default">Submit</button>
-						</form>
+						<div className="form-group">
+							<label>Name:</label>
+							<input type="text" className="form-control" name="name" value={name} onChange={this.handleChange.bind(this)} placeholder="Enter new board name" />
+							<ul>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"grey"} style={{ background: "grey" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"red"} style={{ background: "red" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"blue"} style={{ background: "blue" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"green"} style={{ background: "green" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"brown"} style={{ background: "brown" }}></button></li>
+							</ul>
+						</div>
+						<button onClick={this.onCreate.bind(this)} className="btn btn-default">Submit</button>
 					</div>
 				</div>
 			</div>

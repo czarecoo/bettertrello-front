@@ -55,7 +55,7 @@ class App extends Component {
 						<ul className="list">
 							{this.state.boards.map((board, index) =>
 								<Link key={index} to={`/board/${board.id}`}>
-									<li className="boardMin">
+									<li className="boardMin" style={{ background: board.color }}>
 										{board.name}
 									</li>
 								</Link>
