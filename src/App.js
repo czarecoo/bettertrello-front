@@ -32,6 +32,9 @@ class App extends Component {
 		if (this.state.cookies.get("boards") !== undefined) {
 			this.setState({ boards: this.state.cookies.get("boards") });
 		}
+		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
+			axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
+		}
 		this.getBoards();
 		this.interval = setInterval(() => this.getBoards(), 1000);
 	}
@@ -43,7 +46,6 @@ class App extends Component {
 		return (
 			<div className="container cont">
 				<div className="panel panel-default">
-					<button onClick={this.props.logout}>Logout</button>
 					<div className="panel-heading">
 						<h3 className="panel-title">
 							Boards

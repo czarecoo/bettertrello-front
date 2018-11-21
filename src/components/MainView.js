@@ -10,7 +10,7 @@ class MainView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoggingIn: true, token: null, cookies: this.props.cookies,
+			isLoggingIn: true, cookies: this.props.cookies,
 		};
 	}
 	static propTypes = {
@@ -20,27 +20,12 @@ class MainView extends React.Component {
 	componentDidMount() {
 		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
 			axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
-			this.setState({
-				token: this.state.cookies.get("token")
-			});
 		}
 	}
 	login(login, token, refresh_token, expires_in) {
 		this.state.cookies.set("username", login, { maxAge: expires_in, path: '/' });
 		this.state.cookies.set("token", token, { maxAge: expires_in, path: '/' });
 		this.state.cookies.set("refresh_token", refresh_token, { maxAge: expires_in, path: '/' });
-		this.setState({
-			token: token
-		});
-	}
-	logout() {
-		axiosInstance.defaults.headers.common['Authorization'] = '';
-		this.state.cookies.remove("username");
-		this.state.cookies.remove("token");
-		this.state.cookies.remove("refresh_token");
-		this.setState({
-			token: null
-		});
 	}
 
 	changeView() {
@@ -50,9 +35,9 @@ class MainView extends React.Component {
 	}
 
 	render() {
-		if (this.state.token !== null) {
+		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
 			return (
-				<App logout={this.logout.bind(this)} />
+				<App />
 			)
 		} else {
 			return (

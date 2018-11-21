@@ -29,11 +29,11 @@ class LoginView extends React.Component {
 					password: "secret"
 				}
 			}).then((result) => {
-				console.log(result);
 				if (result.status === 200) {
 					axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + result.data.access_token;
 					this.props.login(this.state.login, result.data.access_token, result.data.refresh_token, result.data.expires_in)
 				} else {
+					console.log(result);
 					this.props.alert.error('Login failed');
 				}
 			}).catch((error) => {

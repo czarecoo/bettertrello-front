@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import axiosInstance from './axiosInstance';
 import { Link } from 'react-router-dom';
+import { withAlert } from 'react-alert';
 
 class Create extends Component {
-
 	constructor() {
 		super();
 		this.state = {
-			name: '', cardLists: []
+			name: '',
 		};
 	}
 	onChange = (e) => {
@@ -18,13 +18,22 @@ class Create extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
+		if (this.state.name !== '') {
+			axiosInstance.post('/boards', { "name": this.state.name })
+				.then((result) => {
+					if (result.status === 201) {
+						this.props.history.push("/");
+					} else {
+						this.props.alert.error('Creation of board failed');
+					}
 
-		const { name, cardLists } = this.state;
+				}).catch(() => {
+					this.props.alert.error('Creation of board failed');
+				});
+		} else {
+			this.props.alert.error("Cannot create board without name");
+		}
 
-		axiosInstance.post('/boards', { name, cardLists })
-			.then((result) => {
-				this.props.history.push("/")
-			});
 	}
 
 	render() {
@@ -53,4 +62,4 @@ class Create extends Component {
 	}
 }
 
-export default Create;
+export default withAlert(Create);

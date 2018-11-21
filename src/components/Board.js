@@ -7,6 +7,7 @@ import Addlist from './Addlist';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 import history from './history';
+import { withAlert } from 'react-alert';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -59,15 +60,19 @@ class Board extends Component {
 	setBoards() {
 		if (this.state.board !== null && this.state.board !== undefined) {
 			axiosInstance.patch('/boards/' + this.props.match.params.id, { cardLists: this.state.lists }).then(res => {
-				if (res.status === 200) {
-					this.setState({
-						isDragging: false
-					});
-				} else {
+				this.setState({
+					isDragging: false
+				});
+				if (res.status !== 200) {
 					console.log(res);
+					this.props.alert.error('Something went wrong with updating drag and drop result to server');
 				}
 			}).catch((err) => {
+				this.setState({
+					isDragging: false
+				});
 				console.log(err);
+				this.props.alert.error('Something went wrong with updating drag and drop result to server');
 			});
 		}
 	}
@@ -191,4 +196,4 @@ class Board extends Component {
 }
 
 
-export default withCookies(Board);
+export default withAlert(withCookies(Board));
