@@ -135,7 +135,7 @@ a:hover, a:visited, a:link, a:active {
   width:50%;
   min-width: 500px;
   min-height: 80%;
-   background: #ebeef0;
+   background: lightgray;
 }
 .cardContent{
 	padding: 10px;
