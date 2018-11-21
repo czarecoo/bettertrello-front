@@ -15,8 +15,19 @@ class Card extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	}
 	addComment() {
-		if (this.state.comment !== '' && this.props.card.comments !== undefined) {
-			axiosInstance.patch('/cards/' + this.props.card.id, { "comments": this.props.card.comments.push(this.state.comment) })
+		if (this.state.comment !== '') {
+			var data;
+			if (this.props.card.activities !== undefined && this.props.card.activities !== null) {
+				data = {
+					"data": this.props.card.activities.push({ data: this.state.comment })
+				}
+			} else {
+				var arr = [];
+				data = {
+					"data": arr.push({ data: this.state.comment })
+				}
+			}
+			axiosInstance.patch('/cards/' + this.props.card.id, data)
 				.then((result) => {
 					if (result.status !== 200 && result.status !== 201) {
 						this.props.alert.error('Commenting failed');
@@ -46,10 +57,12 @@ class Card extends Component {
 				<textarea type="text" className="comments" name="comment" placeholder="Enter comment." value={this.state.comment} onChange={this.handleChange.bind(this)} style={{ resize: "none", }} /><br></br>
 				<button className="btn btn-md btn-primary" onClick={this.addComment.bind(this)}>Add comment</button>
 				<h2>Activity</h2>
+				{console.log(this.props.card.activities)}
 				<ul>
-					{this.props.card.activity !== undefined ? this.props.card.activity.map((activity, index) =>
+					{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
 						<li key={index} className="activity">
-							{activity}
+							{activity.username}dsasd {activity.date}
+							{activity.data}
 						</li>
 					) : "No activity"}
 				</ul>
