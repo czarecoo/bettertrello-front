@@ -74,7 +74,7 @@ class Board extends Component {
 			axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
 		}
 		this.getBoards(true);
-		this.interval = setInterval(() => { this.getBoards() }, 1000);
+		this.interval = setInterval(() => { this.getBoards() }, 2000);
 	}
 	componentWillUnmount() {
 		clearInterval(this.interval);

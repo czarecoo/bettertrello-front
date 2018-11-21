@@ -39,8 +39,8 @@ class Header extends Component {
 						<Link className="btn btn-info btn-sm homebtn" to={`/create`}>
 							<img src={plus} alt="plus" height="25" width="25"></img>
 						</Link>
-						<Link className="btn btn-info btn-sm homebtn" to={`/`} >
-							<div onClick={() => this.logout()}>Logout</div>
+						<Link onClick={() => this.logout()} className="btn btn-info btn-sm homebtn" to={`/`} >
+							<div>Logout</div>
 						</Link>
 					</div>
 				</div>
