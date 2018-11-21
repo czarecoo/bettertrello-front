@@ -7,7 +7,7 @@ class CardDescriptionEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			description: this.props.description, isEditing: false
+			description: this.props.description !== null ? this.props.description : "", isEditing: false
 		};
 	}
 	handleClickOutside = () => {
@@ -19,7 +19,7 @@ class CardDescriptionEdit extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	}
 	isEditing() {
-		if (this.state.isEditing === true) {
+		if (this.state.isEditing === false) {
 			this.setState({
 				description: this.props.description
 			});

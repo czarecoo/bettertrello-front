@@ -30,6 +30,8 @@ class Card extends Component {
 				.then((result) => {
 					if (result.status !== 200 && result.status !== 201) {
 						this.props.alert.error('Commenting failed');
+					} else {
+						this.setState({ comment: "" });
 					}
 				}).catch(() => {
 					this.props.alert.error('Commenting failed');
