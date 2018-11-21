@@ -14,7 +14,7 @@ class Addlist extends Component {
 				name: this.state.newListName,
 				cards: [],
 			}).then(res => {
-				if (res.status === 200) {
+				if (res.status === 200 || res.status === 201) {
 					this.props.getBoards();
 					this.toggleAddingList();
 					this.setState({ newListName: "" });
