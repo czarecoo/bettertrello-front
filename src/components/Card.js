@@ -3,6 +3,7 @@ import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
 import CardNameEdit from './CardNameEdit';
 import CardDescriptionEdit from './CardDescriptionEdit';
+import Activity from './Activity';
 
 class Card extends Component {
 	constructor(props) {
@@ -15,19 +16,17 @@ class Card extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	}
 	addComment() {
+		var array;
+		if (this.props.card.activities !== undefined && this.props.card.activities !== null) {
+			array = this.props.card.activities;
+		} else {
+			array = [];
+		}
+		array.push({ data: this.state.comment });
 		if (this.state.comment !== '') {
-			var data;
-			if (this.props.card.activities !== undefined && this.props.card.activities !== null) {
-				data = {
-					"data": this.props.card.activities.push({ data: this.state.comment })
-				}
-			} else {
-				var arr = [];
-				data = {
-					"data": arr.push({ data: this.state.comment })
-				}
-			}
-			axiosInstance.patch('/cards/' + this.props.card.id, data)
+			axiosInstance.patch('/cards/' + this.props.card.id, {
+				"activities": array
+			})
 				.then((result) => {
 					if (result.status !== 200 && result.status !== 201) {
 						this.props.alert.error('Commenting failed');
@@ -57,13 +56,9 @@ class Card extends Component {
 				<textarea type="text" className="comments" name="comment" placeholder="Enter comment." value={this.state.comment} onChange={this.handleChange.bind(this)} style={{ resize: "none", }} /><br></br>
 				<button className="btn btn-md btn-primary" onClick={this.addComment.bind(this)}>Add comment</button>
 				<h2>Activity</h2>
-				{console.log(this.props.card.activities)}
 				<ul>
 					{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
-						<li key={index} className="activity">
-							{activity.username}dsasd {activity.date}
-							{activity.data}
-						</li>
+						<Activity key={index} activity={activity} />
 					) : "No activity"}
 				</ul>
 			</div>

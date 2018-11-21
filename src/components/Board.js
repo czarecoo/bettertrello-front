@@ -53,6 +53,7 @@ class Board extends Component {
 						this.setState({ lists: res.data.cardLists });
 					}
 				}
+				console.log(res.data.cardLists)
 			}).catch(() => {
 				history.push('/');
 			});
