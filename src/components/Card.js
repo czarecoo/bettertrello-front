@@ -56,11 +56,9 @@ class Card extends Component {
 				<textarea type="text" className="comments" name="comment" placeholder="Enter comment." value={this.state.comment} onChange={this.handleChange.bind(this)} style={{ resize: "none", }} /><br></br>
 				<button className="btn btn-md btn-primary" onClick={this.addComment.bind(this)}>Add comment</button>
 				<h2>Activity</h2>
-				<ul>
-					{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
-						<Activity key={index} activity={activity} />
-					) : "No activity"}
-				</ul>
+				{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
+					<Activity key={index} activity={activity} />
+				) : "No activity"}
 			</div>
 		)
 	}
