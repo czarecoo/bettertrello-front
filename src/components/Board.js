@@ -58,7 +58,7 @@ class Board extends Component {
 	}
 	setBoards() {
 		if (this.state.board !== null && this.state.board !== undefined) {
-			axiosInstance.put('/boards/' + this.props.match.params.id, { id: this.state.board.id, name: this.state.board.name, cardLists: this.state.lists }).then(res => {
+			axiosInstance.patch('/boards/' + this.props.match.params.id, { cardLists: this.state.lists }).then(res => {
 				if (res.status === 200) {
 					this.setState({
 						isDragging: false
