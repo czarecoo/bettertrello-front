@@ -8,6 +8,8 @@ import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 import history from './history';
 import { withAlert } from 'react-alert';
+import { OffCanvas, OffCanvasMenu, OffCanvasBody } from 'react-offcanvas';
+import BoardActivity from './BoardActivity';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -25,12 +27,15 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			board: null, lists: [], isDragging: false, cookies: this.props.cookies, modalIsOpen: false
+			board: null, lists: [], isDragging: false, cookies: this.props.cookies, modalIsOpen: false, isMenuOpened: false
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
 		this.setBoards.bind(this);
 		this.changeModalState.bind(this);
+	}
+	handleClick() {
+		this.setState({ isMenuOpened: !this.state.isMenuOpened });
 	}
 	static propTypes = {
 		cookies: instanceOf(Cookies).isRequired
@@ -162,25 +167,35 @@ class Board extends Component {
 				)));
 		}
 		return (
-			<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
-				{this.state.board !== null ? <h3>{this.state.board.name}</h3> : ""}
-				<ul>
-					<Droppable droppableId="droppable" direction="horizontal" type="lists">
-						{(provided, snapshot) => (
-							<div
-								ref={provided.innerRef}
-								{...provided.droppableProps}
-								style={getListStyle()}
-								{...provided.droppableProps}
-							>
-								{lists}
-								<Addlist boardId={this.props.match.params.id} getBoards={this.getBoards.bind(this)} listsSize={this.state.lists === null || this.state.lists === undefined ? 0 : this.state.lists.length}></Addlist>
-								{provided.placeholder}
-							</div>
-						)}
-					</Droppable>
-				</ul>
-			</DragDropContext>
+			<div>
+				<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
+					{this.state.board !== null ? <h3>{this.state.board.name}</h3> : ""}
+					<ul>
+						<Droppable droppableId="droppable" direction="horizontal" type="lists">
+							{(provided, snapshot) => (
+								<div
+									ref={provided.innerRef}
+									{...provided.droppableProps}
+									style={getListStyle()}
+									{...provided.droppableProps}
+								>
+									{lists}
+									<Addlist boardId={this.props.match.params.id} getBoards={this.getBoards.bind(this)} listsSize={this.state.lists === null || this.state.lists === undefined ? 0 : this.state.lists.length}></Addlist>
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+					</ul>
+				</DragDropContext>
+				<OffCanvas width={300} transitionDuration={300} isMenuOpened={this.state.isMenuOpened} position={"right"}>
+					<OffCanvasBody style={{ float: "right", position: "fixed", right: "0px", top: "50%", fontSize: '50px' }}>
+						<div style={{ cursor: "pointer" }} onClick={this.handleClick.bind(this)}>{!this.state.isMenuOpened ? "<" : ">"}</div>
+					</OffCanvasBody>
+					<OffCanvasMenu className="sidebarInside">
+						<BoardActivity board={this.state.board} />
+					</OffCanvasMenu>
+				</OffCanvas>
+			</div >
 		)
 	}
 }

@@ -140,3 +140,9 @@ a:hover, a:visited, a:link, a:active {
 .cardContent{
 	padding: 10px;
 }
+
+.sidebarInside{
+	margin: 47px 0px;
+	height: calc(100% - 47px);
+	background: lightgray;
+}
