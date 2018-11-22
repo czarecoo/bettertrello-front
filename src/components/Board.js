@@ -188,10 +188,10 @@ class Board extends Component {
 					</ul>
 				</DragDropContext>
 				<OffCanvas width={300} transitionDuration={300} isMenuOpened={this.state.isMenuOpened} position={"right"}>
-					<OffCanvasBody style={{ float: "right", position: "fixed", right: "0px", top: "50%", fontSize: '50px' }}>
+					<OffCanvasBody style={{ float: "right", position: "fixed", right: "0px", top: "42%", fontSize: '50px' }}>
 						<div style={{ cursor: "pointer" }} onClick={this.handleClick.bind(this)}>{!this.state.isMenuOpened ? "<" : ">"}</div>
 					</OffCanvasBody>
-					<OffCanvasMenu className="sidebarInside">
+					<OffCanvasMenu className="sidebarInside" style={{ top: "47px" }}>
 						<BoardActivity board={this.state.board} isOpen={this.state.isMenuOpened} close={this.handleClick.bind(this)} />
 					</OffCanvasMenu>
 				</OffCanvas>

@@ -129,12 +129,12 @@ a:hover, a:visited, a:link, a:active {
 
 .cardModal{
 	position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width:50%;
-  min-width: 500px;
-  min-height: 80%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width:50%;
+	min-width: 500px;
+	min-height: 80%;
    background: lightgray;
 }
 .cardContent{
@@ -142,8 +142,7 @@ a:hover, a:visited, a:link, a:active {
 }
 
 .sidebarInside{
-	margin: 47px 0px;
-	height: calc(100% - 47px);
+	bottom:47px;
 	background: lightgray;
 }
 .boardActivity{
