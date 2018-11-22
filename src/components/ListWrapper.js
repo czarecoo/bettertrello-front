@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import ListContent from './ListContent';
 import Addcard from './Addcard';
+import ListNameEdit from './ListNameEdit';
+
 const getListStyle = isDraggingOver => ({
 	background: 'lightgrey',
 	padding: 8,
@@ -12,7 +14,7 @@ class ListWrapper extends Component {
 	render() {
 		return (
 			<li>
-				<h3 className="listTitle">{this.props.list.name}</h3>
+				{this.props.list !== null && this.props.list !== undefined ? <h3 className="listTitle"><ListNameEdit list={this.props.list} name={this.props.list.name} /></h3> : ""}
 				<Droppable droppableId={this.props.list.id} type={"cards"}>
 					{(provided, snapshot) => (
 						<div

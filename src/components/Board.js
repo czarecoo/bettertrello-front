@@ -10,6 +10,7 @@ import history from './history';
 import { withAlert } from 'react-alert';
 import { OffCanvas, OffCanvasMenu, OffCanvasBody } from 'react-offcanvas';
 import BoardActivity from './BoardActivity';
+import BoardNameEdit from './BoardNameEdit';
 
 const getListStyle = () => ({
 	display: 'flex',
@@ -169,7 +170,7 @@ class Board extends Component {
 		return (
 			<div>
 				<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
-					{this.state.board !== null ? <h3>{this.state.board.name}</h3> : ""}
+					{this.state.board !== null && this.state.board !== undefined ? <h3><BoardNameEdit board={this.state.board} name={this.state.board.name} /></h3> : ""}
 					<ul>
 						<Droppable droppableId="droppable" direction="horizontal" type="lists">
 							{(provided, snapshot) => (

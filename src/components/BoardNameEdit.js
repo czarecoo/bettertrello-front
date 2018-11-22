@@ -3,7 +3,7 @@ import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
 import onClickOutside from "react-onclickoutside";
 
-class CardNameEdit extends Component {
+class BoardNameEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -31,18 +31,18 @@ class CardNameEdit extends Component {
 	changeName() {
 		if (this.state.name !== this.props.name) {
 			if (this.state.name !== '') {
-				axiosInstance.patch('/cards/' + this.props.card.id, { "name": this.state.name })
+				axiosInstance.patch('/boards/' + this.props.board.id, { "name": this.state.name })
 					.then((result) => {
 						if (result.status !== 200 && result.status !== 201) {
-							this.props.alert.error('Changing card name failed');
+							this.props.alert.error('Changing board name failed');
 						} else {
 							this.isEditing();
 						}
 					}).catch(() => {
-						this.props.alert.error('Changing card name failed');
+						this.props.alert.error('Changing board name failed');
 					});
 			} else {
-				this.props.alert.error("Cannot change card name to empty");
+				this.props.alert.error("Cannot change board name to empty");
 			}
 		} else {
 			this.isEditing();
@@ -60,4 +60,4 @@ class CardNameEdit extends Component {
 }
 
 
-export default withAlert(onClickOutside(CardNameEdit));
+export default withAlert(onClickOutside(BoardNameEdit));
