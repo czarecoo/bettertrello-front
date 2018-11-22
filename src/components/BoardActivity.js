@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import onClickOutside from "react-onclickoutside";
 
 class BoardActivity extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			comment: ""
-		};
+	handleClickOutside = () => {
+		if (this.props.isOpen) {
+			this.props.close();
+		}
 	}
 	render() {
 		return (
@@ -22,4 +22,4 @@ class BoardActivity extends Component {
 }
 
 
-export default BoardActivity;
+export default onClickOutside(BoardActivity);

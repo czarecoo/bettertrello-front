@@ -192,7 +192,7 @@ class Board extends Component {
 						<div style={{ cursor: "pointer" }} onClick={this.handleClick.bind(this)}>{!this.state.isMenuOpened ? "<" : ">"}</div>
 					</OffCanvasBody>
 					<OffCanvasMenu className="sidebarInside">
-						<BoardActivity board={this.state.board} />
+						<BoardActivity board={this.state.board} isOpen={this.state.isMenuOpened} close={this.handleClick.bind(this)} />
 					</OffCanvasMenu>
 				</OffCanvas>
 			</div >

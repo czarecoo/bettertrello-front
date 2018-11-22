@@ -146,3 +146,6 @@ a:hover, a:visited, a:link, a:active {
 	height: calc(100% - 47px);
 	background: lightgray;
 }
+.boardActivity{
+	height:100%;
+}
