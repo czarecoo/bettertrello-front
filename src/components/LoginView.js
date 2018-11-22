@@ -6,7 +6,7 @@ class LoginView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: 'admin', password: '@admin@',
+			login: '', password: '',
 		};
 	}
 
