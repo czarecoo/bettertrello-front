@@ -52,7 +52,7 @@ class ListNameEdit extends Component {
 		return (
 			<div onClick={!this.state.isEditing ? this.isEditing.bind(this) : null}>
 				{this.state.isEditing ?
-					<input autoFocus name="name" onKeyPress={(e) => { if (e.key === 'Enter') this.changeName() }} onChange={this.handleChange.bind(this)} value={this.state.name}></input>
+					<input autoFocus style={{ width: "234px" }} name="name" onKeyPress={(e) => { if (e.key === 'Enter') this.changeName() }} onChange={this.handleChange.bind(this)} value={this.state.name}></input>
 					: this.props.name}
 			</div>
 		)
