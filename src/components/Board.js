@@ -9,7 +9,7 @@ import { instanceOf } from 'prop-types';
 import history from './history';
 import { withAlert } from 'react-alert';
 import { OffCanvas, OffCanvasMenu, OffCanvasBody } from 'react-offcanvas';
-import BoardActivity from './BoardActivity';
+import BoardSideMenu from './BoardSideMenu';
 import BoardNameEdit from './BoardNameEdit';
 
 const getListStyle = () => ({
@@ -192,7 +192,7 @@ class Board extends Component {
 						<div style={{ cursor: "pointer" }} onClick={this.handleClick.bind(this)}>{!this.state.isMenuOpened ? "<" : ">"}</div>
 					</OffCanvasBody>
 					<OffCanvasMenu className="sidebarInside" style={{ top: "47px" }}>
-						<BoardActivity board={this.state.board} isOpen={this.state.isMenuOpened} close={this.handleClick.bind(this)} />
+						<BoardSideMenu board={this.state.board} isOpen={this.state.isMenuOpened} close={this.handleClick.bind(this)} />
 					</OffCanvasMenu>
 				</OffCanvas>
 			</div >
