@@ -53,8 +53,6 @@ class Board extends Component {
 					return
 				}
 				if (res.data !== null && res.data !== undefined) {
-					this.setState({ board: res.data });
-					this.state.cookies.set(this.props.match.params.id, res.data, { maxAge: 3600 * 24, path: '/' });
 					if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
 						this.setState({ lists: res.data.cardLists });
 					}

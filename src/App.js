@@ -1,76 +1,53 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axiosInstance from './components/axiosInstance';
+import React from 'react';
+import BoardsView from './components/BoardsView';
+import Header from './components/Header';
+import UserAuthView from './components/UserAuthView';
+import Create from './components/Create';
+import Board from './components/Board';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+import axiosInstance from './components/axiosInstance';
+import { Router, Route } from 'react-router-dom';
 import history from './components/history';
-
-class App extends Component {
+import { CookiesProvider } from 'react-cookie';
+class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			boards: [], cookies: this.props.cookies
+			isLoggedIn: false, cookies: this.props.cookies,
 		};
 	}
 	static propTypes = {
 		cookies: instanceOf(Cookies).isRequired
 	};
-	getBoards() {
-		axiosInstance.get('/boards')
-			.then(res => {
-				this.setState({ boards: res.data });
-				this.state.cookies.set("boards", res.data, { maxAge: 3600 * 24, path: '/' });
-			}).catch(() => {
-				this.state.cookies.remove("boards");
-				this.state.cookies.remove("username");
-				this.state.cookies.remove("token");
-				this.state.cookies.remove("refresh_token");
-				history.push('/');
-			});
-	}
+
 	componentDidMount() {
-		if (this.state.cookies.get("boards") !== undefined) {
-			this.setState({ boards: this.state.cookies.get("boards") });
-		}
 		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
+			this.setState({ isLoggedIn: true });
 			axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
 		}
-		this.getBoards();
-		this.interval = setInterval(() => this.getBoards(), 2000);
 	}
-	componentWillUnmount() {
-		clearInterval(this.interval);
+
+	logOut() {
+		this.setState({ isLoggedIn: false });
+	}
+	logIn() {
+		this.setState({ isLoggedIn: true });
 	}
 
 	render() {
 		return (
-			<div className="container cont">
-				<div className="panel panel-default">
-					<div className="panel-heading">
-						<h3 className="panel-title">
-							Boards
-            			</h3>
-					</div>
-					<div className="panel-body">
-						<ul className="list">
-							{this.state.boards.map((board, index) =>
-								<Link key={index} to={`/board/${board.id}`}>
-									<li className="boardMin" style={{ background: board.color }}>
-										{board.name}
-									</li>
-								</Link>
-							)}
-							<Link to="/create">
-								<li className="boardMin">
-									Create board
-								</li>
-							</Link>
-						</ul>
-					</div>
+			<Router history={history}>
+				<div className="routerDiv">
+					<Header isLoggedIn={this.state.isLoggedIn} logOut={this.logOut.bind(this)} />
+					<CookiesProvider>
+						<Route exact path='/' render={props => this.state.isLoggedIn ? <BoardsView /> : <UserAuthView logIn={this.logIn.bind(this)} />} />
+						<Route path='/create' component={Create} />
+						<Route path='/board/:id' component={Board} />
+					</CookiesProvider>
 				</div>
-			</div >
+			</Router >
 		);
 	}
 }
-
 export default withCookies(App);

@@ -147,4 +147,5 @@ a:hover, a:visited, a:link, a:active {
 }
 .boardActivity{
 	height:100%;
+	padding: 5px;
 }

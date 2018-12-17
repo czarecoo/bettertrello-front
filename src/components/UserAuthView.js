@@ -1,12 +1,11 @@
 import React from 'react';
 import LoginView from './LoginView';
 import RegisterView from './RegisterView';
-import App from '../App';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
 import axiosInstance from './axiosInstance';
 
-class MainView extends React.Component {
+class UserAuthView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,6 +25,7 @@ class MainView extends React.Component {
 		this.state.cookies.set("username", login, { maxAge: expires_in, path: '/' });
 		this.state.cookies.set("token", token, { maxAge: expires_in, path: '/' });
 		this.state.cookies.set("refresh_token", refresh_token, { maxAge: expires_in, path: '/' });
+		this.props.logIn();
 	}
 
 	changeView() {
@@ -35,19 +35,14 @@ class MainView extends React.Component {
 	}
 
 	render() {
-		if (this.state.cookies.get("username") !== undefined && this.state.cookies.get("token") !== undefined && this.state.cookies.get("refresh_token") !== undefined) {
-			return (
-				<App />
-			)
-		} else {
-			return (
-				<div className="MainView">
-					{this.state.isLoggingIn ? <LoginView login={this.login.bind(this)} /> : <RegisterView />}
-					<label><input type="radio" checked={!this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Register </label>{" / "}
-					<label><input type="radio" checked={this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Login </label><br></br>
-				</div>
-			);
-		}
+		return (
+			<div className="MainView">
+				{this.state.isLoggingIn ? <LoginView login={this.login.bind(this)} /> : <RegisterView />}
+				<label><input type="radio" checked={!this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Register </label>{" / "}
+				<label><input type="radio" checked={this.state.isLoggingIn} onChange={this.changeView.bind(this)} /> Login </label><br></br>
+			</div>
+		);
+
 	}
 }
-export default withCookies(MainView);
+export default withCookies(UserAuthView);

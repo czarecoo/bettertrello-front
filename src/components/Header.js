@@ -1,28 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import home from './home.png';
 import logo from './logo.png';
 import plus from './plus.png';
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
-import axiosInstance from './axiosInstance';
 
-class Header extends Component {
-	constructor(props) {
-		super(props);
-		this.logout = this.logout.bind(this);
-	}
-	static propTypes = {
-		cookies: instanceOf(Cookies).isRequired
-	};
-	logout() {
-		axiosInstance.defaults.headers.common['Authorization'] = '';
-		this.props.cookies.remove("username");
-		this.props.cookies.remove("token");
-		this.props.cookies.remove("refresh_token");
-	}
+class Header extends React.Component {
 	render() {
-		if (this.props.cookies.get("username") !== undefined && this.props.cookies.get("token") !== undefined && this.props.cookies.get("refresh_token") !== undefined) {
+		if (this.props.isLoggedIn) {
 			return (
 				<div className="header">
 					<div className="block left">
@@ -39,7 +23,7 @@ class Header extends Component {
 						<Link className="btn btn-info btn-sm homebtn" to={`/create`}>
 							<img src={plus} alt="plus" height="25" width="25"></img>
 						</Link>
-						<Link onClick={() => this.logout()} className="btn btn-info btn-sm homebtn" to={`/`} >
+						<Link onClick={() => this.props.logOut()} className="btn btn-info btn-sm homebtn" to={`/`} >
 							<div>Logout</div>
 						</Link>
 					</div>
@@ -49,7 +33,6 @@ class Header extends Component {
 			return (
 				<div className="header">
 					<div className="block left">
-
 					</div>
 					<div className="block center">
 						<Link to={`/`}>
@@ -57,7 +40,6 @@ class Header extends Component {
 						</Link>
 					</div>
 					<div className="block right">
-
 					</div>
 				</div>
 			)
@@ -67,4 +49,4 @@ class Header extends Component {
 
 }
 
-export default withCookies(Header);
+export default Header;
