@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import home from './home.png';
 import logo from './logo.png';
 import plus from './plus.png';
+import logout from './logout.png';
+import notifications from './notifications.png';
 
 class Header extends React.Component {
 	render() {
@@ -23,8 +25,11 @@ class Header extends React.Component {
 						<Link className="btn btn-info btn-sm homebtn" to={`/create`}>
 							<img src={plus} alt="plus" height="25" width="25"></img>
 						</Link>
+						<button className="btn btn-info btn-sm homebtn">
+							<img src={notifications} alt="notifications" height="25" width="25"></img>
+						</button>
 						<Link onClick={() => this.props.logOut()} className="btn btn-info btn-sm homebtn" to={`/`} >
-							<div>Logout</div>
+							<img src={logout} alt="logout" height="25" width="25"></img>
 						</Link>
 					</div>
 				</div>
