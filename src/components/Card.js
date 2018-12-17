@@ -5,6 +5,7 @@ import CardNameEdit from './CardNameEdit';
 import CardDescriptionEdit from './CardDescriptionEdit';
 import Activity from './Activity';
 import CardManagementButtons from './CardManagementButtons';
+import Deadline from './Deadline';
 
 class Card extends Component {
 	constructor(props) {
@@ -47,6 +48,7 @@ class Card extends Component {
 				<button className="xbtn btn rightCorner" onClick={() => this.props.close()}>X</button>
 				<h2><CardNameEdit card={this.props.card} name={this.props.card.name} /></h2>
 				on list {this.props.listName}<br></br>
+				<Deadline />
 				<CardManagementButtons card={this.props.card} />
 				<h2>Members:</h2>
 				{this.props.card.members !== undefined ? this.props.card.members.map((member, index) =>

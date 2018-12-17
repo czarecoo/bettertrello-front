@@ -154,5 +154,8 @@ a:hover, a:visited, a:link, a:active {
 	overflow: auto;
 }
 .Observerbtn{
-	margin: 0px 2.5px;
+	margin: 2px 2.5px;
+}
+.popover{
+	max-width: 500px;
 }
