@@ -135,10 +135,13 @@ a:hover, a:visited, a:link, a:active {
 	width:50%;
 	min-width: 500px;
 	min-height: 80%;
+	max-height: 100%;
    background: lightgray;
+   overflow: auto;
 }
 .cardContent{
 	padding: 10px;
+	max-height: 100%;
 }
 
 .sidebarInside{
@@ -148,4 +151,8 @@ a:hover, a:visited, a:link, a:active {
 .boardActivity{
 	height:100%;
 	padding: 5px;
+	overflow: auto;
+}
+.cardActivity{
+	
 }

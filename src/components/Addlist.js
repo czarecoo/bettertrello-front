@@ -10,13 +10,13 @@ class Addlist extends Component {
 	}
 	addList() {
 		if (this.state.newListName !== "") {
+			this.toggleAddingList();
 			axiosInstance.post('/boards/' + this.props.boardId + '/lists', {
 				name: this.state.newListName,
 				cards: [],
 			}).then(res => {
 				if (res.status === 200 || res.status === 201) {
 					this.props.getBoards();
-					this.toggleAddingList();
 					this.setState({ newListName: "" });
 				} else {
 					console.log(res);

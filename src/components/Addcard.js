@@ -10,11 +10,11 @@ class Addcard extends Component {
 	}
 	addCard() {
 		if (this.state.newCardName !== "") {
+			this.toggleAddingCard();
 			axiosInstance.post('/lists/' + this.props.listId + '/cards', { name: this.state.newCardName })
 				.then(res => {
 					if (res.status === 200 || res.status === 201) {
 						this.props.getBoards();
-						this.toggleAddingCard();
 						this.setState({ newCardName: "" });
 					} else {
 						console.log(res);
