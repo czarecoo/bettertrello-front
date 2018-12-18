@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import CardDeadline from './CardDeadline';
+import CardCopyButton from './CardCopyButton';
+import CardDeleteButton from './CardDeleteButton';
 
 class CardManagementButtons extends Component {
 	constructor(props) {
@@ -47,8 +49,8 @@ class CardManagementButtons extends Component {
 					:
 					<button className="Observerbtn btn btn-md btn-primary" onClick={this.observe.bind(this)}>Observe</button>
 				}
-				<button className="Observerbtn btn btn-md btn-primary">Copy</button>
-				<button className="Observerbtn btn btn-md btn-primary">Delete</button>
+				<CardCopyButton card={this.props.card} />
+				<CardDeleteButton card={this.props.card} />
 			</div>
 		)
 	}
