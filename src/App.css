@@ -165,3 +165,12 @@ a:hover, a:visited, a:link, a:active {
 .activity{
 	margin-bottom: 5px;
 }
+.activityBtnsCont{
+	display: flex;
+	 font-size: 20px;
+	padding: 5px 0px;
+}
+.activityBtns{
+	height: 13px;
+	padding: 0px 20px;
+}

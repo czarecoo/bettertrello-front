@@ -47,7 +47,8 @@ class CardManagementButtons extends Component {
 					:
 					<button className="Observerbtn btn btn-md btn-primary" onClick={this.observe.bind(this)}>Observe</button>
 				}
-				<button className="Observerbtn btn btn-md btn-primary">Close card</button>
+				<button className="Observerbtn btn btn-md btn-primary">Copy</button>
+				<button className="Observerbtn btn btn-md btn-primary">Delete</button>
 			</div>
 		)
 	}

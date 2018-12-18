@@ -63,7 +63,7 @@ class Card extends Component {
 				<h2>Activity</h2>
 				<div className="cardActivity">
 					{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
-						<Activity key={index} activity={activity} />
+						<Activity key={index} activity={activity} editable={true} deletable={true} />
 					) : "No activity"}
 				</div>
 			</div>
