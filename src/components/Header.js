@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import home from './home.png';
-import logo from './logo.png';
-import plus from './plus.png';
-import user from './user.png';
-import logout from './logout.png';
-import notifications from './notifications.png';
+import home from '../img/home.png';
+import logo from '../img/logo.png';
+import plus from '../img/plus.png';
+import user from '../img/user.png';
+import logout from '../img/logout.png';
+import notifications from '../img/notifications.png';
 import Notifications from './Notifications';
 import Create from './Create';
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
