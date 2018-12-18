@@ -169,7 +169,7 @@ class Board extends Component {
 		return (
 			<div>
 				<DragDropContext onDragEnd={this.onDragEnd.bind(this)} >
-					{this.state.board !== null && this.state.board !== undefined ? <h3><BoardNameEdit board={this.state.board} name={this.state.board.name} /></h3> : ""}
+					{this.state.board !== null && this.state.board !== undefined ? <h1><BoardNameEdit board={this.state.board} name={this.state.board.name} /></h1> : ""}
 					<ul>
 						<Droppable droppableId="droppable" direction="horizontal" type="lists">
 							{(provided, snapshot) => (

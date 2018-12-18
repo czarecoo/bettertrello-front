@@ -121,7 +121,7 @@ a:hover, a:visited, a:link, a:active {
 }
 .rightCorner{
 	position: absolute;
-    right: 0px;
+    right: 15px;
 }
 .btn:focus {
   outline: none;
@@ -173,4 +173,26 @@ a:hover, a:visited, a:link, a:active {
 .activityBtns{
 	height: 13px;
 	padding: 0px 20px;
+}
+#cardTodoList {
+  margin: 0 auto;
+  text-align: left;
+}
+ul {
+  list-style: none;
+}
+ul>li:hover {
+  background-color: #F5F5F5;
+}
+.done {
+  color: red;
+  text-decoration: line-through;
+  display: flex; 
+}
+.undone {
+  color: #61DAFB;
+  display: flex; 
+}
+.icon {
+  margin: 6px 10px 6px 0;
 }
