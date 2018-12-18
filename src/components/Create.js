@@ -54,6 +54,12 @@ class Create extends Component {
 								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"blue"} style={{ background: "blue" }}></button></li>
 								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"green"} style={{ background: "green" }}></button></li>
 								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"brown"} style={{ background: "brown" }}></button></li>
+							</ul><ul>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"pink"} style={{ background: "pink" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"black"} style={{ background: "black" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"purple"} style={{ background: "purple" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"orange"} style={{ background: "orange" }}></button></li>
+								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"magenta"} style={{ background: "magenta" }}></button></li>
 							</ul>
 						</div>
 						<button onClick={this.onCreate.bind(this)} className="btn btn-default">Create</button>
