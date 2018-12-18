@@ -30,6 +30,10 @@ class App extends React.Component {
 
 	logOut() {
 		this.setState({ isLoggedIn: false });
+		axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.cookies.get("token");
+		this.state.cookies.remove("username");
+		this.state.cookies.remove("token");
+		this.state.cookies.remove("refresh_token");
 	}
 	logIn() {
 		this.setState({ isLoggedIn: true });
