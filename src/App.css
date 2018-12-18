@@ -159,3 +159,9 @@ a:hover, a:visited, a:link, a:active {
 .popover{
 	max-width: 500px;
 }
+.Observer{
+	display: flex; 
+}
+.activity{
+	margin-bottom: 5px;
+}

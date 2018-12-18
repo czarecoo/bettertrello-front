@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CardDeadline from './CardDeadline';
 
 class CardManagementButtons extends Component {
 	constructor(props) {
@@ -40,6 +41,7 @@ class CardManagementButtons extends Component {
 	render() {
 		return (
 			<div className="Observer">
+				<CardDeadline card={this.props.card} />
 				{this.state.isObserving ?
 					<button className="Observerbtn btn btn-md btn-primary" onClick={this.stopObserving.bind(this)}>Stop observing</button>
 					:

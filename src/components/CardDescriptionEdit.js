@@ -50,7 +50,7 @@ class CardDescriptionEdit extends Component {
 				{this.state.isEditing ?
 					<div>
 						<textarea placeholder="Enter description" autoFocus name="description" onChange={this.handleChange.bind(this)} value={this.state.description !== null ? this.state.description : ""} style={{ resize: "none", }}></textarea>
-						{this.state.description !== this.props.description ? <button onClick={this.changeName.bind(this)}>Save description</button> : null}
+						{this.state.description !== this.props.description ? <button className="btn btn-md btn-primary" onClick={this.changeName.bind(this)}>Save description</button> : null}
 					</div>
 					: <div>{this.props.description !== "" && this.props.description !== null ? this.props.description : "Click to add description"}<br></br>
 					</div>}

@@ -4,7 +4,9 @@ class Activity extends Component {
 	render() {
 		return (
 			<div className="activity">
-				{this.props.activity.ownerUsername} {this.props.activity.date} {this.props.activity.data}<br></br>
+				<div><b>{this.props.activity.ownerUsername}</b></div>
+				<div><i>{this.props.activity.date}</i></div>
+				<div>{this.props.activity.data}</div>
 			</div>
 		)
 	}
