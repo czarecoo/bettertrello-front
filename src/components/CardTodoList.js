@@ -7,7 +7,7 @@ class TodoList extends React.Component {
 	render() {
 		var items = this.props.items.map((item, id) => {
 			return (
-				<TodoListItem key={id} item={item} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
+				<TodoListItem key={id} item={item} index={id} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
 			);
 		});
 		return (
@@ -18,7 +18,7 @@ class TodoList extends React.Component {
 
 class TodoListItem extends React.Component {
 	onClickClose() {
-		this.props.removeItem(this.props.item.id);
+		this.props.removeItem(this.props.index);
 	}
 	onClickDone() {
 		this.props.markTodoDone(this.props.item.id, this.props.item.done);
@@ -27,13 +27,18 @@ class TodoListItem extends React.Component {
 		if (this.props.item !== null) {
 			var todoClass = !this.props.item.done ? "done" : "undone";
 			return (
-				<li className="list-group-item ">
-					<div className={"btn btn-md btn-primary" + todoClass} onClick={this.onClickDone.bind(this)}>
-						<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
-						{this.props.item.data}
-						<button type="button" className="rightCorner close" onClick={this.onClickClose.bind(this)}>X</button>
-					</div>
-				</li>
+				<div>
+					<li className="btn btn-md btn-primary list-group-item tasklist" onClick={this.onClickDone.bind(this)}>
+						<div className={todoClass} >
+							<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
+							{this.props.item.data}
+
+						</div>
+						<button type="button" className="btn btn-md btn-primary list-group-item" onClick={this.onClickClose.bind(this)}>X</button>
+					</li>
+
+
+				</div>
 			);
 		} else {
 			return null;
@@ -82,7 +87,10 @@ class CardTodoList extends React.Component {
 		}
 	}
 	removeItem(itemId) {
-		axiosInstance.delete('/checklistitems/' + itemId)
+		var tempTab = this.props.card.checkListItems;
+		tempTab.splice(itemId, 1);
+
+		axiosInstance.patch('/cards/' + this.props.card.id, { "checkListItems": tempTab })
 			.then(res => {
 				if (res.status !== 200 || res.status !== 201) {
 					console.log(res);
