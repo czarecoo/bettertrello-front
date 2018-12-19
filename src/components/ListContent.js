@@ -45,12 +45,24 @@ class ListContent extends Component {
 									onClick={() => this.openModal(item.id)}
 								>
 									{item.name}
+									{item.cardDeadlineDate !== undefined ?
+										<div>
+											{item.cardDeadlineDate}
+										</div>
+										:
+										null}
+									{item.checkListItems !== undefined && item.checkListItems > 0 ?
+										<div>
+											{item.checkListItems.lenght}
+										</div>
+										: null}
 									<Modal
 										isOpen={this.state.openModalId === item.id}
 										onRequestClose={this.closeModal}
 										className="cardModal"
 									>
 										<Card card={item} listName={this.props.list.name} listId={this.props.listId} close={this.closeModal} />
+
 									</Modal>
 								</div>
 							)}
