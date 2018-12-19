@@ -53,13 +53,15 @@ class BoardsView extends Component {
 					</div>
 					<div className="panel-body">
 						<ul className="list">
-							{this.state.boards.map((board, index) =>
+							{this.state.boards !== undefined && this.state.boards !== null ? this.state.boards.map((board, index) =>
 								<Link key={index} to={`/board/${board.id}`}>
 									<li className="boardMin" style={{ background: board.color }}>
 										{board.name}
 									</li>
 								</Link>
-							)}
+							)
+								:
+								null}
 							<Link to="/create">
 								<li className="boardMin">
 									Create board
