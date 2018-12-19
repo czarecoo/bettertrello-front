@@ -207,3 +207,6 @@ ul>li:hover {
 .close{
 	height: 100%;
 }
+.paddingZero{
+	padding: 0px;
+}
