@@ -8,7 +8,7 @@ class TodoList extends React.Component {
 		var items = this.props.items.map((item, id) => {
 			if (item !== null) {
 				return (
-					<TodoListItem key={id} item={item} id={item.id} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
+					<TodoListItem key={id} item={item} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
 				);
 			} else {
 				return null;
@@ -21,25 +21,22 @@ class TodoList extends React.Component {
 }
 
 class TodoListItem extends React.Component {
-	constructor(props) {
-		super(props);
-		this.onClickClose = this.onClickClose.bind(this);
-		this.onClickDone = this.onClickDone.bind(this);
-	}
 	onClickClose() {
-		this.props.removeItem(this.props.id);
+		this.props.removeItem(this.props.item.id);
 	}
 	onClickDone() {
-		this.props.markTodoDone(this.props.id);
+		this.props.markTodoDone(this.props.item.id, this.props.item.isDone);
 	}
 	render() {
 		var todoClass = !this.props.item.isDone ? "done" : "undone";
 		return (
 			<li className="list-group-item ">
 				<div className={todoClass}>
-					<div onClick={this.onClickDone}><img src={!this.props.item.isDone ? remove : ok} alt="icon" height="25" width="25" />
-						{this.props.item.data}</div>
-					<button type="button" className="rightCorner close" onClick={this.onClickClose}>&times;</button>
+					<div onClick={this.onClickDone.bind(this)}>
+						<img src={!this.props.item.isDone ? remove : ok} alt="icon" height="25" width="25" />
+						{this.props.item.data}
+					</div>
+					<button type="button" className="rightCorner close" onClick={this.onClickClose.bind(this)}>X</button>
 				</div>
 			</li>
 		);
@@ -52,8 +49,7 @@ class TodoForm extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this);
 		this.state = { inputValue: "" };
 	}
-	onSubmit(event) {
-		event.preventDefault();
+	onSubmit() {
 		this.props.addItem(this.state.inputValue);
 		this.setState({ inputValue: "" })
 	}
@@ -62,10 +58,10 @@ class TodoForm extends React.Component {
 	}
 	render() {
 		return (
-			<form ref="form" onSubmit={this.onSubmit} className="form-inline">
+			<div className="form-inline">
 				<input type="text" onChange={this.onChange.bind(this)} value={this.state.inputValue} className="form-control" placeholder="Add task..." />
-				<button type="submit" className="btn btn-md btn-primary">Add</button>
-			</form>
+				<button type="submit" onClick={this.onSubmit.bind(this)} className="btn btn-md btn-primary">Add</button>
+			</div>
 		);
 	}
 }
@@ -88,7 +84,6 @@ class CardTodoList extends React.Component {
 		}
 	}
 	removeItem(itemId) {
-		console.log(itemId)
 		axiosInstance.delete('/checklistitems/' + itemId)
 			.then((result) => {
 				if (result.status !== 200 && result.status !== 201) {
@@ -98,20 +93,15 @@ class CardTodoList extends React.Component {
 				console.log(err);
 			});
 	}
-	markTodoDone(itemId) {
-		axiosInstance.patch('/cards/' + this.props.card.id, { "description": this.state.description })
+	markTodoDone(itemId, oldIsDone) {
+		axiosInstance.patch('/checklistitems/' + itemId, { "isDone": !oldIsDone })
 			.then((result) => {
 				if (result.status !== 200 && result.status !== 201) {
-					this.props.alert.error('Changing description failed');
-				} else {
-					this.isEditing();
+					console.log(result);
 				}
-			}).catch(() => {
-				this.props.alert.error('Changing description failed');
+			}).catch((err) => {
+				console.log(err);
 			});
-		//var todo = todoItems[itemId];
-		//todo.isDone = !todo.isDone;
-		//this.setState({ todoItems: todoItems });
 	}
 	render() {
 		return (
