@@ -6,13 +6,9 @@ import axiosInstance from './axiosInstance';
 class TodoList extends React.Component {
 	render() {
 		var items = this.props.items.map((item, id) => {
-			if (item !== null) {
-				return (
-					<TodoListItem key={id} item={item} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
-				);
-			} else {
-				return null;
-			}
+			return (
+				<TodoListItem key={id} item={item} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
+			);
 		});
 		return (
 			<ul className="list-group"> {items} </ul>
@@ -25,21 +21,23 @@ class TodoListItem extends React.Component {
 		this.props.removeItem(this.props.item.id);
 	}
 	onClickDone() {
-		this.props.markTodoDone(this.props.item.id, this.props.item.isDone);
+		this.props.markTodoDone(this.props.item.id, this.props.item.done);
 	}
 	render() {
-		var todoClass = !this.props.item.isDone ? "done" : "undone";
-		return (
-			<li className="list-group-item ">
-				<div className={todoClass}>
-					<div onClick={this.onClickDone.bind(this)}>
-						<img src={!this.props.item.isDone ? remove : ok} alt="icon" height="25" width="25" />
+		if (this.props.item !== null) {
+			var todoClass = !this.props.item.done ? "done" : "undone";
+			return (
+				<li className="list-group-item ">
+					<div className={"btn btn-md btn-primary" + todoClass} onClick={this.onClickDone.bind(this)}>
+						<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
 						{this.props.item.data}
+						<button type="button" className="rightCorner close" onClick={this.onClickClose.bind(this)}>X</button>
 					</div>
-					<button type="button" className="rightCorner close" onClick={this.onClickClose.bind(this)}>X</button>
-				</div>
-			</li>
-		);
+				</li>
+			);
+		} else {
+			return null;
+		}
 	}
 }
 
@@ -75,7 +73,7 @@ class CardTodoList extends React.Component {
 	}
 	addItem(newItemValue) {
 		if (newItemValue !== "") {
-			axiosInstance.post('/cards/' + this.props.card.id + '/checklist', { "data": newItemValue, "isDone": false })
+			axiosInstance.post('/cards/' + this.props.card.id + '/checklist', { "data": newItemValue, "done": false })
 				.then(res => {
 					if (res.status !== 200 || res.status !== 201) {
 						console.log(res);
@@ -85,23 +83,19 @@ class CardTodoList extends React.Component {
 	}
 	removeItem(itemId) {
 		axiosInstance.delete('/checklistitems/' + itemId)
-			.then((result) => {
-				if (result.status !== 200 && result.status !== 201) {
-					console.log(result);
+			.then(res => {
+				if (res.status !== 200 || res.status !== 201) {
+					console.log(res);
 				}
-			}).catch((err) => {
-				console.log(err);
-			});
+			}).catch((err) => console.log(err));
 	}
 	markTodoDone(itemId, oldIsDone) {
-		axiosInstance.patch('/checklistitems/' + itemId, { "isDone": !oldIsDone })
-			.then((result) => {
-				if (result.status !== 200 && result.status !== 201) {
-					console.log(result);
+		axiosInstance.patch('/checklistitems/' + itemId, { "done": !oldIsDone })
+			.then(res => {
+				if (res.status !== 200 || res.status !== 201) {
+					console.log(res);
 				}
-			}).catch((err) => {
-				console.log(err);
-			});
+			}).catch((err) => console.log(err));
 	}
 	render() {
 		return (

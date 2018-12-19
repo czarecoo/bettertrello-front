@@ -13,6 +13,7 @@ class Card extends Component {
 		this.state = {
 			comment: ""
 		};
+		console.log(this.props.card)
 	}
 	handleChange(event) {
 		this.setState({ [event.target.name]: event.target.value });

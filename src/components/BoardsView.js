@@ -47,9 +47,9 @@ class BoardsView extends Component {
 			<div className="container cont">
 				<div className="panel panel-default">
 					<div className="panel-heading">
-						<h3 className="panel-title">
+						<h1 className="panel-title">
 							Boards
-            			</h3>
+            			</h1>
 					</div>
 					<div className="panel-body">
 						<ul className="list">
