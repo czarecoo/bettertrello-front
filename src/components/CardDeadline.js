@@ -14,6 +14,7 @@ class CardDeadline extends Component {
 	}
 	handleChange(data) {
 		this.setState({ moment: data });
+		console.log(this.state.moment);
 	};
 	toggle(event) {
 		if (this.state.popoverOpen === event.target.id || this.state.popoverOpen !== "") {

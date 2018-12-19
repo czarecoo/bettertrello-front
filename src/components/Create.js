@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
+import history from './history';
 
 class Create extends Component {
 	constructor() {
@@ -19,7 +20,7 @@ class Create extends Component {
 			axiosInstance.post('/boards', { "name": this.state.name, "color": this.state.color })
 				.then((result) => {
 					if (result.status === 201) {
-						this.props.history.push("/");
+						history.push("/");
 					} else {
 						this.props.alert.error('Creation of board failed');
 					}

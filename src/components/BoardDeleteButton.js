@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
 import history from './history';
 
-class CardDeleteButton extends Component {
+class BoardDeleteButton extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { popoverOpen: "" };
@@ -18,28 +18,29 @@ class CardDeleteButton extends Component {
 		}
 	}
 	delete() {
-		axiosInstance.patch('/cards/' + this.props.card.id, { "isArchived": true })
+		axiosInstance.patch('/boards/' + this.props.board.id, { "isArchived": true })
 			.then((result) => {
 				if (result.status !== 200 && result.status !== 201) {
-					this.props.alert.error('Deleting card failed');
+					this.props.alert.error('Deleting board failed');
 					console.log(result);
 				} else {
 					history.push("/");
 				}
 			}).catch((err) => {
-				this.props.alert.error('Deleting card failed');
+				this.props.alert.error('Deleting board failed');
 				console.log(err);
 			});
 		this.setState({ popoverOpen: "" });
+
 	}
 	render() {
 		return (
 			<div className="deleteCard">
-				<button id="PopoverDeleteCard" className="Observerbtn btn btn-md btn-primary" onClick={this.toggle.bind(this)} >Delete</button>
-				<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverDeleteCard"} target="PopoverDeleteCard" toggle={this.toggle.bind(this)}>
-					<PopoverHeader>Delete card</PopoverHeader>
+				<button id="PopoverDeleteBoard" className="Observerbtn btn btn-md btn-primary" onClick={this.toggle.bind(this)} >Delete</button>
+				<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverDeleteBoard"} target="PopoverDeleteBoard" toggle={this.toggle.bind(this)}>
+					<PopoverHeader>Delete board</PopoverHeader>
 					<PopoverBody>
-						<div>Are you sure you'd like to delete this card?</div>
+						<div>Are you sure you'd like to delete this board?</div>
 						<button className="btn btn-md btn-primary btn-danger" onClick={this.delete.bind(this)}>Delete</button>
 					</PopoverBody>
 				</Popover>
@@ -49,4 +50,4 @@ class CardDeleteButton extends Component {
 	}
 }
 
-export default withAlert(CardDeleteButton);
+export default withAlert(BoardDeleteButton);
