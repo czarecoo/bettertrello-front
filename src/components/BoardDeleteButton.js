@@ -18,7 +18,7 @@ class BoardDeleteButton extends Component {
 		}
 	}
 	delete() {
-		axiosInstance.patch('/boards/' + this.props.board.id, { "isArchived": true })
+		axiosInstance.patch('/boards/' + this.props.board.id, { "archived": true })
 			.then((result) => {
 				if (result.status !== 200 && result.status !== 201) {
 					this.props.alert.error('Deleting board failed');
