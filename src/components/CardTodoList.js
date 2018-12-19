@@ -17,27 +17,17 @@ class TodoList extends React.Component {
 }
 
 class TodoListItem extends React.Component {
-	onClickClose() {
-		this.props.removeItem(this.props.index);
-	}
-	onClickDone() {
-		this.props.markTodoDone(this.props.item.id, this.props.item.done);
-	}
 	render() {
 		if (this.props.item !== null) {
 			var todoClass = !this.props.item.done ? "done" : "undone";
 			return (
-				<div>
-					<li className="list-group-item paddingZero">
-						<div className={"btn btn-md btn-primary" + todoClass} onClick={this.onClickDone.bind(this)}>
-							<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
-							{this.props.item.data}
-						</div>
-						<button type="button" className="rightCorner close" onClick={this.onClickClose.bind(this)}>X</button>
-					</li>
-
-
-				</div>
+				<li className="list-group-item paddingZero">
+					<div className={"btn btn-md btn-primary" + todoClass} onClick={() => this.props.markTodoDone(this.props.item.id, this.props.item.done)}>
+						<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
+						{this.props.item.data}
+					</div>
+					<button type="button" className="rightCorner close" onClick={() => this.props.removeItem(this.props.item.id)}>X</button>
+				</li>
 			);
 		} else {
 			return null;
@@ -61,7 +51,7 @@ class TodoForm extends React.Component {
 	render() {
 		return (
 			<div className="form-inline">
-				<input type="text" onChange={this.onChange.bind(this)} value={this.state.inputValue} className="form-control" placeholder="Add task..." />
+				<input type="text" onKeyPress={(e) => { if (e.key === 'Enter') this.onSubmit() }} onChange={this.onChange.bind(this)} value={this.state.inputValue} className="form-control" placeholder="Add task..." />
 				<button type="submit" onClick={this.onSubmit.bind(this)} className="btn btn-md btn-primary">Add</button>
 			</div>
 		);
@@ -86,6 +76,15 @@ class CardTodoList extends React.Component {
 		}
 	}
 	removeItem(itemId) {
+		axiosInstance.delete('/checklistitems/' + itemId)
+			.then(res => {
+				if (res.status !== 200 && res.status !== 201) {
+					console.log(res);
+				}
+			}).catch((err) => console.log(err));
+	}
+	/*
+	removeItem(itemId) { // remember to change param
 		var tempTab = this.props.card.checkListItems;
 		tempTab.splice(itemId, 1);
 
@@ -96,6 +95,7 @@ class CardTodoList extends React.Component {
 				}
 			}).catch((err) => console.log(err));
 	}
+	*/
 	markTodoDone(itemId, oldIsDone) {
 		axiosInstance.patch('/checklistitems/' + itemId, { "done": !oldIsDone })
 			.then(res => {

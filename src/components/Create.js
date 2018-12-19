@@ -48,7 +48,7 @@ class Create extends Component {
 					<div className="panel-body">
 						<div className="form-group">
 							<label>Name:</label>
-							<input type="text" className="form-control" name="name" value={name} onChange={this.handleChange.bind(this)} placeholder="Enter new board name" />
+							<input autoFocus type="text" className="form-control" name="name" value={name} onChange={this.handleChange.bind(this)} placeholder="Enter new board name" />
 							<ul>
 								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"grey"} style={{ background: "grey" }}></button></li>
 								<li><button className="btn btn-default" onClick={this.handleChange.bind(this)} name={"color"} value={"red"} style={{ background: "red" }}></button></li>
