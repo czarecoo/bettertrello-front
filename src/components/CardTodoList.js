@@ -28,13 +28,12 @@ class TodoListItem extends React.Component {
 			var todoClass = !this.props.item.done ? "done" : "undone";
 			return (
 				<div>
-					<li className="btn btn-md btn-primary list-group-item tasklist" onClick={this.onClickDone.bind(this)}>
-						<div className={todoClass} >
+					<li className="list-group-item">
+						<div className={"btn btn-md btn-primary" + todoClass} onClick={this.onClickDone.bind(this)}>
 							<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
 							{this.props.item.data}
-
 						</div>
-						<button type="button" className="btn btn-md btn-primary list-group-item" onClick={this.onClickClose.bind(this)}>X</button>
+						<button type="button" className="rightCorner close" onClick={this.onClickClose.bind(this)}>X</button>
 					</li>
 
 
