@@ -31,9 +31,11 @@ li{
     margin:auto;
 }
 .left {
+	width:190px;
     margin:auto auto auto 0;
 }
 .right {
+	width:190px;
     margin:auto 0 auto auto;
 }
 .homebtn{

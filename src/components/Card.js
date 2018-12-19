@@ -58,7 +58,7 @@ class Card extends Component {
 				) : "No members"}
 				<h3>Description</h3>
 				<CardDescriptionEdit card={this.props.card} description={this.props.card.description} />
-				<CardTodoList />
+				<CardTodoList card={this.props.card} />
 				<h3>Comments</h3>
 				<textarea type="text" className="comments" name="comment" placeholder="Enter comment." value={this.state.comment} onChange={this.handleChange.bind(this)} style={{ resize: "none", }} /><br></br>
 				<button className="btn btn-md btn-primary" onClick={this.addComment.bind(this)}>Add comment</button>

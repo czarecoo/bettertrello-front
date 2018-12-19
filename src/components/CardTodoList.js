@@ -1,19 +1,18 @@
 import React from 'react';
 import ok from '../img/ok.png';
 import remove from '../img/remove.png';
-
-var todoItems = [
-	{ index: 1, value: "learn react", done: false },
-	{ index: 2, value: "Go shopping", done: true },
-	{ index: 3, value: "buy flowers", done: true }
-];
+import axiosInstance from './axiosInstance';
 
 class TodoList extends React.Component {
 	render() {
-		var items = this.props.items.map((item, index) => {
-			return (
-				<TodoListItem key={index} item={item} index={index} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
-			);
+		var items = this.props.items.map((item, id) => {
+			if (item !== null) {
+				return (
+					<TodoListItem key={id} item={item} id={item.id} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
+				);
+			} else {
+				return null;
+			}
 		});
 		return (
 			<ul className="list-group"> {items} </ul>
@@ -28,20 +27,18 @@ class TodoListItem extends React.Component {
 		this.onClickDone = this.onClickDone.bind(this);
 	}
 	onClickClose() {
-		var index = parseInt(this.props.index);
-		this.props.removeItem(index);
+		this.props.removeItem(this.props.id);
 	}
 	onClickDone() {
-		var index = parseInt(this.props.index);
-		this.props.markTodoDone(index);
+		this.props.markTodoDone(this.props.id);
 	}
 	render() {
-		var todoClass = !this.props.item.done ? "done" : "undone";
+		var todoClass = !this.props.item.isDone ? "done" : "undone";
 		return (
 			<li className="list-group-item ">
 				<div className={todoClass}>
-					<div onClick={this.onClickDone}><img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
-						{this.props.item.value}</div>
+					<div onClick={this.onClickDone}><img src={!this.props.item.isDone ? remove : ok} alt="icon" height="25" width="25" />
+						{this.props.item.data}</div>
 					<button type="button" className="rightCorner close" onClick={this.onClickClose}>&times;</button>
 				</div>
 			</li>
@@ -53,32 +50,23 @@ class TodoForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.onSubmit = this.onSubmit.bind(this);
-	}
-	componentDidMount() {
-		this.refs.itemName.focus();
+		this.state = { inputValue: "" };
 	}
 	onSubmit(event) {
 		event.preventDefault();
-		var newItemValue = this.refs.itemName.value;
-
-		if (newItemValue) {
-			this.props.addItem({ newItemValue });
-			this.refs.form.reset();
-		}
+		this.props.addItem(this.state.inputValue);
+		this.setState({ inputValue: "" })
+	}
+	onChange(event) {
+		this.setState({ inputValue: event.target.value })
 	}
 	render() {
 		return (
 			<form ref="form" onSubmit={this.onSubmit} className="form-inline">
-				<input type="text" ref="itemName" className="form-control" placeholder="Add task..." />
+				<input type="text" onChange={this.onChange.bind(this)} value={this.state.inputValue} className="form-control" placeholder="Add task..." />
 				<button type="submit" className="btn btn-md btn-primary">Add</button>
 			</form>
 		);
-	}
-}
-
-class TodoHeader extends React.Component {
-	render() {
-		return <h3>Task list</h3>;
 	}
 }
 
@@ -88,30 +76,52 @@ class CardTodoList extends React.Component {
 		this.addItem = this.addItem.bind(this);
 		this.removeItem = this.removeItem.bind(this);
 		this.markTodoDone = this.markTodoDone.bind(this);
-		this.state = { todoItems: todoItems };
 	}
-	addItem(todoItem) {
-		todoItems.push({
-			index: todoItems.length + 1,
-			value: todoItem.newItemValue,
-			done: false
-		});
-		this.setState({ todoItems: todoItems });
+	addItem(newItemValue) {
+		if (newItemValue !== "") {
+			axiosInstance.post('/cards/' + this.props.card.id + '/checklist', { "data": newItemValue, "isDone": false })
+				.then(res => {
+					if (res.status !== 200 || res.status !== 201) {
+						console.log(res);
+					}
+				}).catch((err) => console.log(err));
+		}
 	}
-	removeItem(itemIndex) {
-		todoItems.splice(itemIndex, 1);
-		this.setState({ todoItems: todoItems });
+	removeItem(itemId) {
+		console.log(itemId)
+		axiosInstance.delete('/checklistitems/' + itemId)
+			.then((result) => {
+				if (result.status !== 200 && result.status !== 201) {
+					console.log(result);
+				}
+			}).catch((err) => {
+				console.log(err);
+			});
 	}
-	markTodoDone(itemIndex) {
-		var todo = todoItems[itemIndex];
-		todo.done = !todo.done;
-		this.setState({ todoItems: todoItems });
+	markTodoDone(itemId) {
+		axiosInstance.patch('/cards/' + this.props.card.id, { "description": this.state.description })
+			.then((result) => {
+				if (result.status !== 200 && result.status !== 201) {
+					this.props.alert.error('Changing description failed');
+				} else {
+					this.isEditing();
+				}
+			}).catch(() => {
+				this.props.alert.error('Changing description failed');
+			});
+		//var todo = todoItems[itemId];
+		//todo.isDone = !todo.isDone;
+		//this.setState({ todoItems: todoItems });
 	}
 	render() {
 		return (
 			<div id="cardTodoList">
-				<TodoHeader />
-				<TodoList items={todoItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone} />
+				<h3>Task list</h3>
+				{this.props.card.checkListItems !== undefined && this.props.card.checkListItems !== null && this.props.card.checkListItems.length > 0 ?
+					<TodoList items={this.props.card.checkListItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone} />
+					:
+					null
+				}
 				<TodoForm addItem={this.addItem} />
 			</div>
 		);
