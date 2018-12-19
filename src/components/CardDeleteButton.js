@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
-import history from './history';
 
 class CardDeleteButton extends Component {
 	constructor(props) {
@@ -18,19 +17,18 @@ class CardDeleteButton extends Component {
 		}
 	}
 	delete() {
-		axiosInstance.patch('/cards/' + this.props.card.id, { "isArchived": true })
+		axiosInstance.patch('/cards/' + this.props.card.id, { "archived": true })
 			.then((result) => {
 				if (result.status !== 200 && result.status !== 201) {
 					this.props.alert.error('Deleting card failed');
 					console.log(result);
-				} else {
-					history.push("/");
 				}
 			}).catch((err) => {
 				this.props.alert.error('Deleting card failed');
 				console.log(err);
 			});
 		this.setState({ popoverOpen: "" });
+		this.props.close();
 	}
 	render() {
 		return (

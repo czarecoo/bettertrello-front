@@ -49,7 +49,7 @@ class Card extends Component {
 				<h1><CardNameEdit card={this.props.card} name={this.props.card.name} /></h1>
 				on list: <b>{this.props.listName}</b><br></br>
 
-				<CardManagementButtons card={this.props.card} />
+				<CardManagementButtons close={this.props.close} card={this.props.card} />
 				<h3>Members:</h3>
 				{this.props.card.members !== undefined ? this.props.card.members.map((member, index) =>
 					<li key={index} className="members">
