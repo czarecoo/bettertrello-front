@@ -33,7 +33,7 @@ class ListContent extends Component {
 		}
 		return (
 			this.props.cards.map((item, index) => (
-				item !== undefined ?
+				item !== undefined && (item.archived === undefined || (item.archived !== undefined && item.archived !== true)) ?
 					<div key={index}>
 						<Draggable draggableId={item.id} index={index} isDragDisabled={this.state.modalIsOpen}>
 							{(provided, snapshot) => (
