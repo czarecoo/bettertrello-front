@@ -210,3 +210,9 @@ ul>li:hover {
 .paddingZero{
 	padding: 0px;
 }
+.flexDivs{
+	display: flex; 
+}
+.paddingRight5{
+	padding-right: 5px;
+}

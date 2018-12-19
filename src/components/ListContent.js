@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import Modal from 'react-modal';
 import Card from './Card';
+import moment from 'moment';
+import checklist from '../img/checklist.png';
+import clock from '../img/clock.png';
+
 Modal.setAppElement('#root');
 class ListContent extends Component {
 	constructor(props) {
@@ -9,7 +13,6 @@ class ListContent extends Component {
 		this.state = {
 			modalIsOpen: false, openModalId: null
 		};
-
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
 	}
@@ -44,18 +47,25 @@ class ListContent extends Component {
 									className="card"
 									onClick={() => this.openModal(item.id)}
 								>
-									{item.name}
-									{item.cardDeadlineDate !== undefined ?
-										<div>
-											{item.cardDeadlineDate}
-										</div>
-										:
-										null}
-									{item.checkListItems !== undefined && item.checkListItems > 0 ?
-										<div>
-											{item.checkListItems.lenght}
-										</div>
-										: null}
+									<div><h5>{item.name}</h5></div>
+									<div className="flexDivs">
+										{item.checkListItems !== null && item.checkListItems !== undefined && item.checkListItems.length > 0 ?
+											<div className="paddingRight5">
+												<img src={checklist} alt="checklist" height="15" width="15"></img>
+												{(item.checkListItems.filter((item) => { return item.done; }).reduce((all) => { return all + 1 }, 0))}/{item.checkListItems.length}
+											</div>
+											:
+											null
+										}
+										{item.cardDeadlineDate !== null && item.cardDeadlineDate !== undefined && moment(item.cardDeadlineDate).isValid() ?
+											<div>
+												<img src={clock} alt="clock" height="15" width="15"></img>
+												{moment(item.cardDeadlineDate).format("DD MMM")}
+											</div>
+											:
+											null
+										}
+									</div>
 									<Modal
 										isOpen={this.state.openModalId === item.id}
 										onRequestClose={this.closeModal}
