@@ -12,7 +12,6 @@ class CardActivity extends Component {
 	delete() {
 		axiosInstance.delete('/activities/' + this.props.activity.id)
 			.then(res => {
-				console.log(res, this.props.activity);
 				if (res.status !== 200 && res.status !== 201) {
 					console.log(res, this.props.activity);
 				}

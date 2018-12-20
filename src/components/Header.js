@@ -42,7 +42,7 @@ class Header extends React.Component {
 					</div>
 					<div className="block right">
 						<button id="PopoverCreate" onClick={this.toggle} className="btn btn-info btn-sm homebtn" to={`/create`}>
-							<img src={plus} alt="plus" height="25" width="25"></img>
+							<img id="PopoverCreate" src={plus} alt="plus" height="25" width="25"></img>
 						</button>
 						<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverCreate"} target="PopoverCreate" toggle={this.toggle}>
 							<PopoverHeader>Create board</PopoverHeader>
@@ -51,7 +51,7 @@ class Header extends React.Component {
 							</PopoverBody>
 						</Popover>
 						<button id="PopoverNotifications" onClick={this.toggle} className="btn btn-info btn-sm homebtn">
-							<img src={notifications} alt="notifications" height="25" width="25"></img>
+							<img id="PopoverNotifications" src={notifications} alt="notifications" height="25" width="25"></img>
 						</button>
 						<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverNotifications"} target="PopoverNotifications" toggle={this.toggle}>
 							<PopoverHeader>Notifications</PopoverHeader>
@@ -61,7 +61,7 @@ class Header extends React.Component {
 						</Popover>
 
 						<button id="PopoverUser" onClick={this.toggle} className="btn btn-info btn-sm homebtn">
-							<img src={user} alt="user" height="25" width="25"></img>
+							<img id="PopoverUser" src={user} alt="user" height="25" width="25"></img>
 						</button>
 						<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverUser"} target="PopoverUser" toggle={this.toggle}>
 							<PopoverHeader>User panel</PopoverHeader>
