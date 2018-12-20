@@ -1,37 +1,33 @@
 import React, { Component } from 'react';
-//import axiosInstance from './axiosInstance';
+import axiosInstance from './axiosInstance';
 
 class Notifications extends Component {
-	/*addComment() {
-		var array;
-		if (this.props.card.activities !== undefined && this.props.card.activities !== null) {
-			array = this.props.card.activities;
-		} else {
-			array = [];
-		}
-
-		if (this.state.comment !== '') {
-			this.setState({ comment: "" });
-			array.push({ data: this.state.comment });
-			axiosInstance.patch('/cards/' + this.props.card.id, {
-				"activities": array
-			})
-				.then((result) => {
-					if (result.status !== 200 && result.status !== 201) {
-						this.props.alert.error('Commenting failed');
-					}
-				}).catch(() => {
-					this.props.alert.error('Commenting failed');
-				});
-		} else {
-			this.props.alert.error("Cannot create empty comment");
-		}
-	}*/
+	constructor(props) {
+		super(props);
+		this.state = {
+			notifications: []
+		};
+	}
+	componentDidMount() {
+		this.getNotifications();
+		this.interval = setInterval(() => { this.getNotifications() }, 2000);
+	}
+	getNotifications() {
+		axiosInstance.get('/user/')
+			.then(res => {
+				if (res.data !== null && res.data !== undefined && res.data.notifications !== null &&
+					res.data.notifications !== undefined && res.data.notifications.length > 0) {
+					this.setState({ notifications: res.data.notifications });
+				}
+			}).catch((err) => {
+				console.log(err);
+			});
+	}
 	render() {
-		if (this.props.notifications !== undefined && this.props.notifications.length > 0) {
+		if (this.props.notifications !== null && this.props.notifications !== undefined && this.props.notifications.length > 0) {
 			return (
 				<div className="notificationsContent">
-					{this.props.notifications.map((notification, index) =>
+					{this.state.notifications.map((notification, index) =>
 						<div key={index}>
 							{notification}
 						</div>

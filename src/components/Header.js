@@ -15,7 +15,7 @@ class Header extends React.Component {
 		super(props);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			popoverOpen: "", notifications: []
+			popoverOpen: ""
 		};
 	}
 	toggle(event) {
@@ -56,7 +56,7 @@ class Header extends React.Component {
 						<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverNotifications"} target="PopoverNotifications" toggle={this.toggle}>
 							<PopoverHeader>Notifications</PopoverHeader>
 							<PopoverBody>
-								<Notifications notifications={this.state.notifications} />
+								<Notifications />
 							</PopoverBody>
 						</Popover>
 

@@ -54,11 +54,13 @@ class Card extends Component {
 
 				<CardManagementButtons lists={this.props.lists} username={this.props.username} close={this.props.close} card={this.props.card} />
 				<h3>Members:</h3>
-				{this.props.card.members !== undefined ? this.props.card.members.map((member, index) =>
-					<li key={index} className="members">
-						{member}
-					</li>
-				) : "No members"}
+				<ul>
+					{this.props.card.observerUserNames !== undefined ? this.props.card.observerUserNames.map((member, index) =>
+						<li key={index} className="members list btn-primary btn-sm marginRight5">
+							{member}
+						</li>
+					) : "No members"}
+				</ul>
 				<h3>Description</h3>
 				<CardDescriptionEdit card={this.props.card} description={this.props.card.description} />
 				<CardTodoList card={this.props.card} />
