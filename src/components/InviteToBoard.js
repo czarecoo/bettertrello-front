@@ -13,7 +13,7 @@ class InviteToBoard extends Component {
 		if (this.state.newUserName !== "") {
 			axiosInstance.post('/boards/' + this.props.board.id + '/users/' + this.state.newUserName)
 				.then(res => {
-					if (res.status !== 200 && res.status === 201) {
+					if (res.status !== 200 && res.status !== 201) {
 						console.log(res);
 					}
 				}).catch((err) => console.log(err));
