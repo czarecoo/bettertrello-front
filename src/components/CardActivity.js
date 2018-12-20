@@ -27,7 +27,6 @@ class CardActivity extends Component {
 			});
 	}
 	render() {
-		console.log(this.props.activity)
 		return (
 			<div className="activity">
 				<div className="activityBtnsCont"><b>{this.props.activity.ownerUsername}</b>
