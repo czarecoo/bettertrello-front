@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import onClickOutside from "react-onclickoutside";
 import BoardActivity from "./BoardActivity";
 import BoardDeleteButton from "./BoardDeleteButton";
+import InviteToBoard from "./InviteToBoard";
 
 class BoardSideMenu extends Component {
 	handleClickOutside = () => {
@@ -28,8 +29,9 @@ class BoardSideMenu extends Component {
 				{this.showMenu() ? <div>
 					<h2>Menu</h2><hr></hr>
 					<BoardDeleteButton board={this.props.board} />
+					<InviteToBoard board={this.props.board} />
 				</div>
-					: null}
+					: "Menu unavalible for non owner users."}
 				<hr></hr>
 				<h2>Board Activity</h2>
 				{this.props.board !== null && this.props.board.activities !== undefined && this.props.board.activities !== null ? this.props.board.activities.map((activity, index) =>
