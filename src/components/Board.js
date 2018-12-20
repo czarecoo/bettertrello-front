@@ -28,7 +28,7 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			board: null, lists: [], isDragging: false, cookies: this.props.cookies, modalIsOpen: false, isMenuOpened: false
+			board: null, lists: [], isDragging: false, cookies: this.props.cookies, modalIsOpen: false, isMenuOpened: false, username: this.props.cookies.get("username"),
 		};
 		this.onCardDrop.bind(this);
 		this.onListDrop.bind(this);
@@ -160,7 +160,7 @@ class Board extends Component {
 									provided.draggableProps.style
 								)}
 							>
-								<ListWrapper changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
+								<ListWrapper username={this.state.username} changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
 							</div>
 						)}
 					</Draggable>

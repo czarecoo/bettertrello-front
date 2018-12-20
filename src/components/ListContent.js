@@ -71,7 +71,7 @@ class ListContent extends Component {
 										onRequestClose={this.closeModal}
 										className="cardModal"
 									>
-										<Card card={item} listName={this.props.list.name} listId={this.props.listId} close={this.closeModal} />
+										<Card username={this.props.username} card={item} listName={this.props.list.name} listId={this.props.listId} close={this.closeModal} />
 
 									</Modal>
 								</div>
