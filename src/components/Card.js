@@ -29,18 +29,9 @@ class Card extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	}
 	addComment() {
-		var array;
-		if (this.props.card.activities !== undefined && this.props.card.activities !== null) {
-			array = this.props.card.activities;
-		} else {
-			array = [];
-		}
-
 		if (this.state.comment !== '') {
-			this.setState({ comment: "" });
-			array.push({ data: this.state.comment });
-			axiosInstance.patch('/cards/' + this.props.card.id, {
-				"activities": array
+			axiosInstance.post('/cards/' + this.props.card.id + '/activities', {
+				"data": this.state.comment
 			})
 				.then((result) => {
 					if (result.status !== 200 && result.status !== 201) {
@@ -49,6 +40,7 @@ class Card extends Component {
 				}).catch(() => {
 					this.props.alert.error('Commenting failed');
 				});
+			this.setState({ comment: "" });
 		} else {
 			this.props.alert.error("Cannot create empty comment");
 		}
