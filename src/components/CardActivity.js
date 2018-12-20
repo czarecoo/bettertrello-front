@@ -39,7 +39,7 @@ class CardActivity extends Component {
 						null
 					}</div>
 				<div><i>{this.props.activity.date}</i>
-					{this.props.activity.isEdited !== undefined && this.props.activity.isEdited ? " (isEdited)" : null}
+					{this.props.activity.isEdited !== undefined && this.props.activity.isEdited ? " (Edited)" : null}
 				</div>
 				<ActivityCommentEdit isEditable={canEdit(this.props.activity, this.props.username)} card={this.props.card} activity={this.props.activity} comment={this.props.activity.data} />
 				<hr></hr>
