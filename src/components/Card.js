@@ -3,9 +3,20 @@ import axiosInstance from './axiosInstance';
 import { withAlert } from 'react-alert';
 import CardNameEdit from './CardNameEdit';
 import CardDescriptionEdit from './CardDescriptionEdit';
-import Activity from './Activity';
+import CardActivity from './CardActivity';
 import CardManagementButtons from './CardManagementButtons';
 import CardTodoList from './CardTodoList';
+
+function isOwner(card, username) {
+	if (card.ownerUsername !== null && card.ownerUsername !== undefined && card.ownerUsername.length > 0) {
+		// eslint-disable-next-line
+		if (card.ownerUsername == username) {
+			return true;
+		}
+
+	};
+	return false;
+}
 
 class Card extends Component {
 	constructor(props) {
@@ -65,7 +76,7 @@ class Card extends Component {
 				<h3>Activity</h3>
 				<div className="cardActivity">
 					{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
-						<Activity key={index} activity={activity} editable={true} deletable={true} />
+						<CardActivity key={index} activity={activity} editable={isOwner(this.props.card, this.props.username)} />
 					) : "No activity"}
 				</div>
 			</div>

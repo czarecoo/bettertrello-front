@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import onClickOutside from "react-onclickoutside";
-import Activity from "./Activity";
+import BoardActivity from "./BoardActivity";
 import BoardDeleteButton from "./BoardDeleteButton";
 
 
@@ -22,7 +22,7 @@ class BoardSideMenu extends Component {
 				<hr></hr>
 				<h2>Board Activity</h2>
 				{this.props.board !== null && this.props.board.activities !== undefined && this.props.board.activities !== null ? this.props.board.activities.map((activity, index) =>
-					<Activity key={index} activity={activity} />
+					<BoardActivity key={index} activity={activity} />
 				) : "No activity"}
 			</div>
 		)

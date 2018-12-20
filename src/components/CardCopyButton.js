@@ -49,10 +49,8 @@ class CardCopyButton extends Component {
 	copy() {
 		if (this.state.cardName !== "" && this.state.selectedList !== null && this.state.selectedList !== undefined &&
 			this.state.selectedPosition !== null && this.state.selectedPosition !== undefined) {
-			console.log(this.state.selectedList.value, this.state.selectedPosition.value)
 			axiosInstance.post('/cards/' + this.props.card.id + '/copy', { "listId": this.state.selectedList.value, "listPosition": this.state.selectedPosition.value })
 				.then(res => {
-					console.log(res);
 					if (res.status !== 200 || res.status !== 201) {
 						console.log(res);
 					}
