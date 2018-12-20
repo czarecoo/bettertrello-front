@@ -46,7 +46,7 @@ class ActivityCommentEdit extends Component {
 		}
 	}
 	render() {
-		if (this.props.isisEditable) {
+		if (this.props.isEditable) {
 			return (
 				<div onClick={!this.state.isEditing ? this.isEditing.bind(this) : null}>
 					{this.state.isEditing ?
