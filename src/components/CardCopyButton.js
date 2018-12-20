@@ -1,28 +1,38 @@
 import React, { Component } from 'react';
 import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import Select from 'react-select';
+import axiosInstance from './axiosInstance';
 
-const optionsBoard = [
-	{ value: 'board1', label: 'Board 1' },
-	{ value: 'board2', label: 'Board 2' },
-	{ value: 'board3', label: 'Board 3' }
-];
-const optionsList = [
-	{ value: 'list1', label: 'List 1' },
-	{ value: 'list2', label: 'List 2' },
-	{ value: 'list3', label: 'List 3' }
-];
-const optionsPosition = [
-	{ value: 'pos1', label: 'Position 1' },
-	{ value: 'pos2', label: 'Position 2' },
-	{ value: 'pos3', label: 'Position 3' }
-];
+function toOptionsLists(arr) {
+	var returnArr = [];
+	for (var i = 0; i < arr.length; ++i) {
+		var obj = {};
+		obj['value'] = arr[i].id;
+		obj['label'] = arr[i].name;
+		obj['cards'] = arr[i].cards;
+		returnArr.push(obj);
+	}
+	return returnArr;
+}
+function toOptionsCards(list) {
+	var returnArr = [];
+	if (list !== null && list !== undefined && list.cards !== null && list.cards !== undefined && list.cards.length > 0) {
+		var arr = list.cards;
+		for (var i = 0; i < arr.length; ++i) {
+			var obj = {};
+			obj['value'] = i;
+			obj['label'] = "Position " + i;
+			returnArr.push(obj);
+		}
+	}
+	return returnArr;
+}
 class CardCopyButton extends Component {
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			popoverOpen: "", cardName: "", selectedBoard: null, selectedList: null, selectedPosition: null,
+			popoverOpen: "", cardName: "", selectedList: null, selectedPosition: null,
 		};
 	}
 	toggle(event) {
@@ -37,10 +47,20 @@ class CardCopyButton extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	}
 	copy() {
+		if (this.state.cardName !== "" && this.state.selectedList !== null && this.state.selectedList !== undefined &&
+			this.state.selectedPosition !== null && this.state.selectedPosition !== undefined) {
+			console.log(this.state.selectedList.value, this.state.selectedPosition.value)
+			axiosInstance.post('/cards/' + this.props.card.id + '/copy', { "listId": this.state.selectedList.value, "listPosition": this.state.selectedPosition.value })
+				.then(res => {
+					console.log(res);
+					if (res.status !== 200 || res.status !== 201) {
+						console.log(res);
+					}
+				}).catch((err) => console.log(err));
 
-	}
-	handleBoardSelection = (selectedBoard) => {
-		this.setState({ selectedBoard });
+			this.setState({ popoverOpen: "" });
+		}
+
 	}
 	handleListSelection = (selectedList) => {
 		this.setState({ selectedList });
@@ -55,25 +75,19 @@ class CardCopyButton extends Component {
 				<Popover placement="bottom" isOpen={this.state.popoverOpen === "PopoverCopyCard"} target="PopoverCopyCard" toggle={this.toggle.bind(this)}>
 					<PopoverHeader>Card copy</PopoverHeader>
 					<PopoverBody>
-						<textarea type="text" className="comments" placeholder="Enter new card name." value={this.state.cardName} onChange={this.onChange.bind(this)} style={{ resize: "none", }} /><br></br>
+						<textarea type="text" className="comments" name="cardName" placeholder="Enter new card name." value={this.state.cardName} onChange={this.onChange.bind(this)} style={{ resize: "none", }} /><br></br>
 						Copy to:
-						<Select
-							placeholder={"Choose board"}
-							value={this.state.selectedBoard}
-							onChange={this.handleBoardSelection}
-							options={optionsBoard}
-						/>
 						<Select
 							placeholder={"Choose list"}
 							value={this.state.selectedList}
 							onChange={this.handleListSelection}
-							options={optionsList}
+							options={toOptionsLists(this.props.lists)}
 						/>
 						<Select
 							placeholder={"Choose card"}
 							value={this.state.selectedPosition}
 							onChange={this.handlePositionSelection}
-							options={optionsPosition}
+							options={toOptionsCards(this.state.selectedList)}
 						/>
 						<button className="btn btn-md btn-primary" onClick={this.copy.bind(this)}>Copy</button>
 					</PopoverBody>

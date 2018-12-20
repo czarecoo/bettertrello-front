@@ -10,7 +10,7 @@ class CardManagementButtons extends Component {
 			<div className="Observer">
 				<CardDeadline card={this.props.card} />
 				<CardObserverButton username={this.props.username} card={this.props.card} />
-				<CardCopyButton card={this.props.card} />
+				<CardCopyButton lists={this.props.lists} card={this.props.card} />
 				<CardDeleteButton close={this.props.close} card={this.props.card} />
 			</div>
 		)

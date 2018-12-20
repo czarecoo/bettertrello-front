@@ -160,7 +160,7 @@ class Board extends Component {
 									provided.draggableProps.style
 								)}
 							>
-								<ListWrapper username={this.state.username} changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
+								<ListWrapper lists={this.state.lists} username={this.state.username} changeModalState={this.changeModalState.bind(this)} list={list} key={index} getBoards={this.getBoards.bind(this)}></ListWrapper>
 							</div>
 						)}
 					</Draggable>

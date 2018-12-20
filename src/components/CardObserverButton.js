@@ -7,7 +7,6 @@ class CardObserverButton extends Component {
 		this.state = ({
 			isObserving: false
 		});
-		console.log(this.props.card.observerUserNames, this.props.username)
 	}
 	componentDidMount() {
 		this.interval = setInterval(() => { this.checkObserving() }, 1000);
