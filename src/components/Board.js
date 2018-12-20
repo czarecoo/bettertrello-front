@@ -53,7 +53,7 @@ class Board extends Component {
 					return
 				}
 				if (res.data !== null && res.data !== undefined) {
-					this.setState({ board: res.data });
+					this.setState({ board: res.data }, console.log(this.state.board));
 					if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
 						this.setState({ lists: res.data.cardLists });
 					}
@@ -192,7 +192,7 @@ class Board extends Component {
 						<div style={{ cursor: "pointer" }} onClick={this.handleClick.bind(this)}>{!this.state.isMenuOpened ? "<" : ">"}</div>
 					</OffCanvasBody>
 					<OffCanvasMenu className="sidebarInside" style={{ top: "47px" }}>
-						<BoardSideMenu board={this.state.board} isOpen={this.state.isMenuOpened} close={this.handleClick.bind(this)} />
+						<BoardSideMenu username={this.state.username} board={this.state.board} isOpen={this.state.isMenuOpened} close={this.handleClick.bind(this)} />
 					</OffCanvasMenu>
 				</OffCanvas>
 			</div >
