@@ -3,6 +3,16 @@ import axiosInstance from './axiosInstance';
 import ActivityCommentEdit from './ActivityCommentEdit';
 import { withAlert } from 'react-alert';
 
+function canEdit(activity, username) {
+	if (activity.ownerUsername !== null && activity.ownerUsername !== undefined && username !== null && username !== undefined) {
+		// eslint-disable-next-line
+		if (activity.ownerUsername == username && activity.editable) {
+			return true;
+		}
+	};
+	return false;
+}
+
 class CardActivity extends Component {
 	delete() {
 		axiosInstance.delete('/activities/' + this.props.activity.id)
@@ -17,10 +27,11 @@ class CardActivity extends Component {
 			});
 	}
 	render() {
+
 		return (
 			<div className="activity">
 				<div className="activityBtnsCont"><b>{this.props.activity.ownerUsername}</b>
-					{this.props.editable ?
+					{canEdit(this.props.activity, this.props.username) ?
 						<div className="activityBtns">
 							<button onClick={this.delete.bind(this)} className="btn btn-md btn-secondary">Delete</button>
 						</div>
@@ -28,9 +39,9 @@ class CardActivity extends Component {
 						null
 					}</div>
 				<div><i>{this.props.activity.date}</i>
-					{this.props.activity.isEdited !== undefined && this.props.activity.isEdited ? "Edited" : null}
+					{this.props.activity.edited !== undefined && this.props.activity.edited ? " (Edited)" : null}
 				</div>
-				<ActivityCommentEdit card={this.props.card} activity={this.props.activity} comment={this.props.activity.data} />
+				<ActivityCommentEdit isEditable={canEdit(this.props.activity, this.props.username)} card={this.props.card} activity={this.props.activity} comment={this.props.activity.data} />
 				<hr></hr>
 			</div >
 		)

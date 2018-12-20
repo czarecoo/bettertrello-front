@@ -46,17 +46,24 @@ class ActivityCommentEdit extends Component {
 		}
 	}
 	render() {
-		return (
-			<div onClick={!this.state.isEditing ? this.isEditing.bind(this) : null}>
-				{this.state.isEditing ?
-					<div>
-						<textarea placeholder="Enter new activity content" autoFocus name="comment" onChange={this.handleChange.bind(this)} value={this.state.comment !== null ? this.state.comment : ""} style={{ resize: "none", }}></textarea>
-						{this.state.comment !== this.props.comment ? <button className="btn btn-md btn-primary" onClick={this.changeActivity.bind(this)}>Save activity</button> : null}
-					</div>
-					: <div>{this.props.comment !== "" && this.props.comment !== null ? this.props.comment : "Click to add comment"}<br></br>
-					</div>}
-			</div>
-		)
+		if (this.props.isEditable) {
+			return (
+				<div onClick={!this.state.isEditing ? this.isEditing.bind(this) : null}>
+					{this.state.isEditing ?
+						<div>
+							<textarea placeholder="Enter new activity content" autoFocus name="comment" onChange={this.handleChange.bind(this)} value={this.state.comment !== null ? this.state.comment : ""} style={{ resize: "none", }}></textarea>
+							{this.state.comment !== this.props.comment ? <button className="btn btn-md btn-primary" onClick={this.changeActivity.bind(this)}>Save activity</button> : null}
+						</div>
+						: <div>{this.props.comment}<br></br>
+						</div>}
+				</div>
+			)
+		} else {
+			return (
+				<div>{this.props.comment}<br></br>
+				</div>
+			)
+		}
 	}
 }
 

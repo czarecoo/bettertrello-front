@@ -7,17 +7,6 @@ import CardActivity from './CardActivity';
 import CardManagementButtons from './CardManagementButtons';
 import CardTodoList from './CardTodoList';
 
-function isOwner(card, username) {
-	if (card.ownerUsername !== null && card.ownerUsername !== undefined) {
-		// eslint-disable-next-line
-		if (card.ownerUsername == username) {
-			return true;
-		}
-
-	};
-	return false;
-}
-
 class Card extends Component {
 	constructor(props) {
 		super(props);
@@ -70,7 +59,7 @@ class Card extends Component {
 				<h3>Activity</h3>
 				<div className="cardActivity">
 					{this.props.card.activities !== undefined && this.props.card.activities !== null ? this.props.card.activities.map((activity, index) =>
-						<CardActivity key={index} activity={activity} editable={isOwner(this.props.card, this.props.username)} />
+						<CardActivity key={index} activity={activity} username={this.props.username} />
 					) : "No activity"}
 				</div>
 			</div>
