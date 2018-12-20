@@ -30,7 +30,6 @@ class CardObserverButton extends Component {
 	observe() {
 		axiosInstance.post('/cards/' + this.props.card.id + '/observe')
 			.then((result) => {
-				console.log(result);
 				if (result.status !== 200 && result.status !== 201) {
 					console.log(result);
 				}
@@ -41,7 +40,6 @@ class CardObserverButton extends Component {
 	stopObserving() {
 		axiosInstance.post('/cards/' + this.props.card.id + '/unobserve')
 			.then((result) => {
-				console.log(result);
 				if (result.status !== 200 && result.status !== 201) {
 					console.log(result);
 				}
