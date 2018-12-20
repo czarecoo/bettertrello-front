@@ -41,6 +41,7 @@ class Header extends React.Component {
 						</Link>
 					</div>
 					<div className="block right">
+						<div className="helloUser">Hello,{" " + this.props.username + "!"}</div>
 						<button id="PopoverCreate" onClick={this.toggle} className="btn btn-info btn-sm homebtn" to={`/create`}>
 							<img id="PopoverCreate" src={plus} alt="plus" height="25" width="25"></img>
 						</button>

@@ -31,12 +31,16 @@ li{
     margin:auto;
 }
 .left {
-	width:190px;
+	width:280px;
     margin:auto auto auto 0;
 }
 .right {
-	width:190px;
+	width:280px;
     margin:auto 0 auto auto;
+}
+.helloUser{
+	display: inline-block;
+	color: white;
 }
 .homebtn{
 	background: #3e8bcf;
@@ -169,7 +173,7 @@ a:hover, a:visited, a:link, a:active {
 }
 .activityBtnsCont{
 	display: flex;
-	 font-size: 20px;
+	font-size: 20px;
 	padding: 5px 0px;
 }
 .activityBtns{
@@ -218,4 +222,7 @@ ul>li:hover {
 }
 .marginRight5{
 	margin-right: 5px;
+}
+.width{
+	width: 300px;
 }

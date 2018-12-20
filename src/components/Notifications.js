@@ -32,7 +32,7 @@ class Notifications extends Component {
 			return (
 				<div className="notificationsContent">
 					{this.state.notifications.map((notification, index) =>
-						<BoardActivity key={index} activity={notification} />
+						<BoardActivity className="width" key={index} activity={notification} />
 					)}
 				</div>
 			)
