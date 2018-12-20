@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axiosInstance from './axiosInstance';
+import BoardActivity from './BoardActivity';
 
 class Notifications extends Component {
 	constructor(props) {
@@ -27,13 +28,11 @@ class Notifications extends Component {
 			});
 	}
 	render() {
-		if (this.props.notifications !== null && this.props.notifications !== undefined && this.props.notifications.length > 0) {
+		if (this.state.notifications !== null && this.state.notifications !== undefined && this.state.notifications.length > 0) {
 			return (
 				<div className="notificationsContent">
 					{this.state.notifications.map((notification, index) =>
-						<div key={index}>
-							{notification.data}
-						</div>
+						<BoardActivity key={index} activity={notification} />
 					)}
 				</div>
 			)

@@ -8,7 +8,7 @@ import CardManagementButtons from './CardManagementButtons';
 import CardTodoList from './CardTodoList';
 
 function isOwner(card, username) {
-	if (card.ownerUsername !== null && card.ownerUsername !== undefined && card.ownerUsername.length > 0) {
+	if (card.ownerUsername !== null && card.ownerUsername !== undefined) {
 		// eslint-disable-next-line
 		if (card.ownerUsername == username) {
 			return true;
