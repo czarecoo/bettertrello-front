@@ -6,7 +6,7 @@ import { withAlert } from 'react-alert';
 function canEdit(activity, username) {
 	if (activity.ownerUsername !== null && activity.ownerUsername !== undefined && username !== null && username !== undefined) {
 		// eslint-disable-next-line
-		if (activity.ownerUsername == username && activity.editable) {
+		if (activity.ownerUsername == username && activity.isEditable) {
 			return true;
 		}
 	};
@@ -27,7 +27,7 @@ class CardActivity extends Component {
 			});
 	}
 	render() {
-
+		console.log(this.props.activity)
 		return (
 			<div className="activity">
 				<div className="activityBtnsCont"><b>{this.props.activity.ownerUsername}</b>
@@ -39,9 +39,9 @@ class CardActivity extends Component {
 						null
 					}</div>
 				<div><i>{this.props.activity.date}</i>
-					{this.props.activity.edited !== undefined && this.props.activity.edited ? " (Edited)" : null}
+					{this.props.activity.isEdited !== undefined && this.props.activity.isEdited ? " (isEdited)" : null}
 				</div>
-				<ActivityCommentEdit isEditable={canEdit(this.props.activity, this.props.username)} card={this.props.card} activity={this.props.activity} comment={this.props.activity.data} />
+				<ActivityCommentEdit isisEditable={canEdit(this.props.activity, this.props.username)} card={this.props.card} activity={this.props.activity} comment={this.props.activity.data} />
 				<hr></hr>
 			</div >
 		)

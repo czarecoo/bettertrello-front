@@ -22,8 +22,8 @@ class TodoListItem extends React.Component {
 			var todoClass = !this.props.item.done ? "done" : "undone";
 			return (
 				<li className="list-group-item paddingZero">
-					<div className={"btn btn-md btn-primary" + todoClass} onClick={() => this.props.markTodoDone(this.props.item.id, this.props.item.done)}>
-						<img src={!this.props.item.done ? remove : ok} alt="icon" height="25" width="25" />
+					<div className={"btn btn-md btn-primary" + todoClass} onClick={() => this.props.markTodoDone(this.props.item.id, this.props.item.isDone)}>
+						<img src={!this.props.item.isDone ? remove : ok} alt="icon" height="25" width="25" />
 						{this.props.item.data}
 					</div>
 					<button type="button" className="rightCorner close" onClick={() => this.props.removeItem(this.props.item.id)}>X</button>
@@ -67,7 +67,7 @@ class CardTodoList extends React.Component {
 	}
 	addItem(newItemValue) {
 		if (newItemValue !== "") {
-			axiosInstance.post('/cards/' + this.props.card.id + '/checklist', { "data": newItemValue, "done": false })
+			axiosInstance.post('/cards/' + this.props.card.id + '/checklist', { "data": newItemValue, "isDone": false })
 				.then(res => {
 					if (res.status !== 200 && res.status !== 201) {
 						console.log(res);
@@ -83,21 +83,8 @@ class CardTodoList extends React.Component {
 				}
 			}).catch((err) => console.log(err));
 	}
-	/*
-	removeItem(itemId) { // remember to change param
-		var tempTab = this.props.card.checkListItems;
-		tempTab.splice(itemId, 1);
-
-		axiosInstance.patch('/cards/' + this.props.card.id, { "checkListItems": tempTab })
-			.then(res => {
-				if (res.status !== 200 && res.status !== 201) {
-					console.log(res);
-				}
-			}).catch((err) => console.log(err));
-	}
-	*/
 	markTodoDone(itemId, oldIsDone) {
-		axiosInstance.patch('/checklistitems/' + itemId, { "done": !oldIsDone })
+		axiosInstance.patch('/checklistitems/' + itemId, { "isDone": !oldIsDone })
 			.then(res => {
 				if (res.status !== 200 && res.status !== 201) {
 					console.log(res);

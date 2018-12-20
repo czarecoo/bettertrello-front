@@ -55,7 +55,7 @@ class Board extends Component {
 				if (res.data !== null && res.data !== undefined) {
 					this.setState({ board: res.data });
 					if (res.data.cardLists !== null && res.data.cardLists !== undefined) {
-						this.setState({ lists: res.data.cardLists });
+						this.setState({ lists: res.data.cardLists }, console.log(this.state.lists));
 					}
 				}
 			}).catch(() => {

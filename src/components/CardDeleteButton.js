@@ -17,7 +17,7 @@ class CardDeleteButton extends Component {
 		}
 	}
 	delete() {
-		axiosInstance.patch('/cards/' + this.props.card.id, { "archived": true })
+		axiosInstance.patch('/cards/' + this.props.card.id, { "isArchived": true })
 			.then((result) => {
 				if (result.status !== 200 && result.status !== 201) {
 					this.props.alert.error('Deleting card failed');
