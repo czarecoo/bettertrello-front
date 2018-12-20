@@ -12,9 +12,13 @@ class Notifications extends Component {
 		this.getNotifications();
 		this.interval = setInterval(() => { this.getNotifications() }, 2000);
 	}
+	componentWillUnmount() {
+		clearInterval(this.interval);
+	}
 	getNotifications() {
 		axiosInstance.get('/user/')
 			.then(res => {
+				console.log(res);
 				if (res.data !== null && res.data !== undefined && res.data.notifications !== null &&
 					res.data.notifications !== undefined && res.data.notifications.length > 0) {
 					this.setState({ notifications: res.data.notifications });
@@ -29,7 +33,7 @@ class Notifications extends Component {
 				<div className="notificationsContent">
 					{this.state.notifications.map((notification, index) =>
 						<div key={index}>
-							{notification}
+							{notification.data}
 						</div>
 					)}
 				</div>
